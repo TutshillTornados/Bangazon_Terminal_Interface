@@ -2,20 +2,20 @@
 
 Welcome to The Command Line Ordering System. This project will be allow a user to interact with a basic product ordering database via a command line interface.
 
-<!-- [Get Started](#getstarted)
-Install
-Setup Database
-    Build the Database
-    Seed the Database (OPTIONAL)
-Database Admin
-    Drop All Tables
-    Drop Individual Tables
-    Build the Database
-Ordering System Interface
-Software Versions
-Contribute
-Report Bugs
-Meet the Dev Team -->
+[Get Started](#get-started)
+[Install](#install)
+[Setup Database](#setup-database)
+    [Build the Database](#build-the-database)
+    [Seed the Database](#seed-the-database) (OPTIONAL)
+[Database Admin](#database-admin)
+    [Drop All Tables](#drop-all-tables)
+    [Drop Individual Tables](#drop-individual-tables)
+    [Build the Database](#build-the-database)
+[Ordering System Interface](#ordering-system-interface)
+[Software Versions](#software-versions)
+[Contribute](#contribute)
+[Report Bugs](#report-bugs)
+[Meet the Dev Team](#meet-the-dev-team)
 
 ## Get Started
 
@@ -38,7 +38,7 @@ After forking the repo and installing Ruby and SQLite3, in console, run the foll
 ```
 ruby lib/database_admin/build_database.rb
 ```
-**Seed the Database (OPTIONAL)**
+**Seed the Database**
 ```
 ruby lib/database_admin/seed.rb
 ```

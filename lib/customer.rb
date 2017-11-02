@@ -39,4 +39,4 @@ class Customer
                db.close
            return true
        end
-   end
+end
