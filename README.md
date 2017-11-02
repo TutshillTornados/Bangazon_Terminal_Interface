@@ -52,10 +52,10 @@ Ruby Ver 2.4.2p198
 ```
 
 ## Contribute
-Fork this repository and submit your contributions as a [pull request](https://github.com/TutshillTornados/bangazon/blob/master/PULL_REQUEST_TEMPLATE.md) using the PR template.
+Fork this repository and submit your contributions as a [pull request](https://github.com/TutshillTornados/Bangazon_Terminal_Interface/blob/master/PULL_REQUEST_TEMPLATE.md) using the PR template.
 
 ## Report Bugs
-Create an [issue report](https://github.com/TutshillTornados/bangazon/issues/new)
+Create an [issue report](https://github.com/TutshillTornados/Bangazon_Terminal_Interface/issues/new)
 
 ## Meet the Dev Team
 - [Austin Kurtis](https://github.com/austinKurtis)
