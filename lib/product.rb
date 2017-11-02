@@ -2,6 +2,8 @@
 
 require 'store'
 class Product
+    attr_accessor :price, :title, :description, :quantity
+    
     def initialize
         @price = args[:price]
         @title = args[:title]
@@ -43,5 +45,5 @@ class Product
 
     def update_product
     end
-    
+
 end
