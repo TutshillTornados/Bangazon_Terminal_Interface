@@ -27,7 +27,7 @@ Exit the Program
 ```
 Then seed the database
 ```
-ruby lib/seed.rb
+ruby lib/support/seed.rb
 ```
 
 ## Ordering System Interface
