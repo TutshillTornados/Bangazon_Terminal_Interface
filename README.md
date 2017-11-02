@@ -2,20 +2,20 @@
 
 Welcome to The Command Line Ordering System. This project will be allow a user to interact with a basic product ordering database via a command line interface.
 
-[Get Started](#get-started)
-[Install](#install)
-[Setup Database](#setup-database)
-    [Build the Database](#build-the-database)
-    [Seed the Database](#seed-the-database) (OPTIONAL)
-[Database Admin](#database-admin)
-    [Drop All Tables](#drop-all-tables)
-    [Drop Individual Tables](#drop-individual-tables)
-    [Build the Database](#build-the-database)
-[Ordering System Interface](#ordering-system-interface)
-[Software Versions](#software-versions)
-[Contribute](#contribute)
-[Report Bugs](#report-bugs)
-[Meet the Dev Team](#meet-the-dev-team)
+- [Get Started](#get-started)
+- [Install](#install)
+- [Setup Database](#setup-database)
+- - [Build the Database](#build-the-database)
+- - [Seed the Database](#seed-the-database) (OPTIONAL)
+- [Database Admin](#database-admin)
+- - [Drop All Tables](#drop-all-tables)
+- - [Drop Individual Tables](#drop-individual-tables)
+- - [Build the Database](#build-the-database)
+- [Ordering System Interface](#ordering-system-interface)
+- [Software Versions](#software-versions)
+- [Contribute](#contribute)
+- [Report Bugs](#report-bugs)
+- [Meet the Dev Team](#meet-the-dev-team)
 
 ## Get Started
 
