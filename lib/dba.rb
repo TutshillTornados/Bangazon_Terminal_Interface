@@ -1,4 +1,7 @@
 # This file in the MODEL in the MVC
+# Author: Dr. Teresa Vasquez
+# Checks to see if the DB exists, if it doesn't it creates it, otherwise it ignores the command to creaate
+
 require 'sqlite3'
 class DatabaseAdmin
 

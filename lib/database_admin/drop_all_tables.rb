@@ -1,3 +1,7 @@
+# Author: Dr. Teresa Vasquez
+# Drops all the tables in the database
+# run in the command line: ruby lib/database_admin/drop_all_tables.rb
+
 require 'sqlite3'
 
 db = SQLite3::Database.open("bangazon_store.sqlite")

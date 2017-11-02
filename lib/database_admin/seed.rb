@@ -1,3 +1,7 @@
+# Author: Dr. Teresa Vasquez
+# Seeds the database
+# run in the command line: ruby lib/database_admin/seed.rb
+
 require 'faker'
 require 'sqlite3'
 

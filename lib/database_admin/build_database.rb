@@ -1,3 +1,8 @@
+# Author: Dr. Teresa Vasquez
+# Builds the database and all the tables
+# run in the command line: ruby lib/database_admin/build_database.rb
+
+
 require 'sqlite3'
 
 begin
