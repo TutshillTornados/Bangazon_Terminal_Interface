@@ -21,6 +21,14 @@ After forking the repo and installing Ruby and SQLite3, in console, run the foll
 ```
 ruby init.rb
 ```
+Exit the Program
+```
+> 12
+```
+Then seed the database
+```
+ruby lib/support/seed.rb
+```
 
 ## Ordering System Interface
 Below is a view of the main menu for the terminal interface.
