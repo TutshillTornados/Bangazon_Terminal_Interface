@@ -1,4 +1,6 @@
-# This is the View of the MVC Model
+# This is the VIEW of the MVC Model
+# Author: Dr. Teresa Vasquez
+# Controls the view for the user
 
 require 'sqlite3'
 require 'dba'
@@ -12,6 +14,7 @@ class Store
         $active_customer
     end
 
+    #Initializes the DB and begins process to see if it exists
     def initialize(path=nil)
         DatabaseAdmin.filepath = path
         if DatabaseAdmin.file_useable?
@@ -28,18 +31,19 @@ class Store
         end
     end
 
+    # This begins the program and tells what to do when specific actions happen
     def launch!
-    introduction
-    # action loop
-    result = nil
-    until result == :quit do
-        action, args = get_action
-        result = do_action(action, args)
-    end
-    conclusion
+        introduction
+        # action loop
+        result = nil
+        until result == :quit do
+            action, args = get_action
+            result = do_action(action, args)
+        end
+        conclusion
     end
 
-      def get_action
+    def get_action
         action = nil
         # Keep asking for user input until they input a valid action
         until Store::Config.actions.include?(action)
@@ -52,9 +56,10 @@ class Store
             action = args
         end
         return action, args
-      end
+    end
     
-      def do_action(action, args=[])
+    # Action Loop: accepts customer input and performs methods that coincide with customer input
+    def do_action(action, args=[])
         case action
         when 1
             create_a_customer_account
@@ -73,9 +78,9 @@ class Store
         else
             puts "I don't understand that command"
         end
-      end
+    end
 
-      def create_a_customer_account
+    def create_a_customer_account
         system "clear" or system "cls"
         output_action_header("** Create a Customer Account **")
         add_customer = Customer.add_using_questions
@@ -86,8 +91,9 @@ class Store
         else
             puts "SAVE ERROR: Customer not added"
         end
-      end
+    end
 
+    # Between actions, the menu displays to prompt the customer
     def bewtween_views
         output_action_header("\n*** What Would You Like To Do Next? ***")
         puts "1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!"
