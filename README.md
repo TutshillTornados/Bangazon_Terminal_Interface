@@ -51,7 +51,7 @@ ruby lib/database_admin/seed.rb
 If there comes a time that you need to drop tables or update the database here are some options...
 
 **Drop All Tables**
-```
+```ruby
 ruby lib/database_admin/drop_all_tables.rb
 ```
 **Drop Individual Tables**
