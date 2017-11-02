@@ -17,7 +17,7 @@ If you would like to run this api on your local machine, these installation tips
 * [Install SQLite3](https://rubygems.org/gems/sqlite3-ruby/versions/1.3.3)
 
 ### Setup Database
-After forking the repo and installing Ruby and SQLite3, in consle, run the following code to setup the database
+After forking the repo and installing Ruby and SQLite3, in console, run the following code to setup the database
 ```
 ruby init.rb
 ```
