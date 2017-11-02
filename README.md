@@ -84,6 +84,11 @@ ruby lib/database_admin/build_database.rb
 ## Ordering System Interface
 Below is a view of the main menu for the terminal interface.
 
+To begin the program, run:
+```ruby
+ruby init.rb
+```
+
 ### Main Menu
 ```ruby
 *********************************************************
