@@ -88,7 +88,7 @@ Below is a view of the main menu for the terminal interface.
 *********************************************************
 **  Welcome to Bangazon! Command Line Ordering System  **
 *********************************************************
-1. Create a customer account
+1. [Create a customer account](#)
 2. Choose active customer
 3. Create a payment option
 4. Add product to sell
