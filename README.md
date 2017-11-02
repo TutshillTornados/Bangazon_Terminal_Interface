@@ -103,6 +103,7 @@ Below is a view of the main menu for the terminal interface.
 12. Leave Bangazon!
 >
 ```
+[See more details about the interface](https://github.com/TutshillTornados/Bangazon_Terminal_Interface/blob/master/ORDERING_SYSTEM_INTERFACE.md)
 
 ## Software Versions
 ```ruby
