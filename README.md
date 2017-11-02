@@ -1,4 +1,4 @@
-# Bangazon_Terminal_Interface -  - Tutshill Tornados
+# Bangazon Terminal Interface - Tutshill Tornados
 
 Welcome to The Command Line Ordering System. This project will be allow a user to interact with a basic product ordering database via a command line interface.
 
