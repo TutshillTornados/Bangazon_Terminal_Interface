@@ -1,5 +1,4 @@
 # This file in the MODEL in the MVC
-
 require 'sqlite3'
 class DatabaseAdmin
 
