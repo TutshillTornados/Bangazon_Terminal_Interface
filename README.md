@@ -56,23 +56,23 @@ ruby lib/database_admin/drop_all_tables.rb
 ```
 **Drop Individual Tables**
 
-_Customers Table_**
+**_Customers Table_**
 ```ruby
 ruby lib/database_admin/drop_customers.rb
 ```
-_Orders Table_**
+**_Orders Table_**
 ```ruby
 ruby lib/database_admin/drop_orders.rb
 ```
-_Payments Table_**
+**_Payments Table_**
 ```ruby
 ruby lib/database_admin/drop_payments.rb
 ```
-_Products Table_**
+**_Products Table_**
 ```ruby
 ruby lib/database_admin/drop_products.rb
 ```
-_Order-Products Table_**
+**_Order-Products Table_**
 ```ruby
 ruby lib/database_admin/drop_order_products.rb
 ```
