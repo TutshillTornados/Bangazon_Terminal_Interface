@@ -2,6 +2,21 @@
 
 Welcome to The Command Line Ordering System. This project will be allow a user to interact with a basic product ordering database via a command line interface.
 
+<!-- [Get Started](#getstarted)
+Install
+Setup Database
+    Build the Database
+    Seed the Database (OPTIONAL)
+Database Admin
+    Drop All Tables
+    Drop Individual Tables
+    Build the Database
+Ordering System Interface
+Software Versions
+Contribute
+Report Bugs
+Meet the Dev Team -->
+
 ## Get Started
 
 To get started, navigate to the directory of your choice and run the following code in the command line
@@ -18,20 +33,47 @@ If you would like to run this api on your local machine, these installation tips
 
 ### Setup Database
 After forking the repo and installing Ruby and SQLite3, in console, run the following code to setup the database
+
+**Build the Database**
 ```
-ruby init.rb
+ruby lib/database_admin/build_database.rb
 ```
-Exit the Program
+**Seed the Database (OPTIONAL)**
 ```
-> 12
+ruby lib/database_admin/seed.rb
 ```
-Build the Database
+
+### Database Admin
+If there comes a time that you need to drop tables or update the database here are some options...
+
+**Drop All Tables**
 ```
-ruby lib/dba/build_database.rb
+ruby lib/database_admin/drop_all_tables.rb
 ```
-Then seed the database
+**Drop Individual Tables**
+Customers Table
 ```
-ruby lib/support/seed.rb
+ruby lib/database_admin/drop_customers.rb
+```
+Orders Table
+```
+ruby lib/database_admin/drop_orders.rb
+```
+Payments Table
+```
+ruby lib/database_admin/drop_payments.rb
+```
+Products Table
+```
+ruby lib/database_admin/drop_products.rb
+```
+Order_Products Table
+```
+ruby lib/database_admin/drop_order_products.rb
+```
+To rebuild the database, use the Build the Database command
+```
+ruby lib/database_admin/build_database.rb
 ```
 
 ## Ordering System Interface
