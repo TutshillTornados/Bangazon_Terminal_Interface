@@ -25,6 +25,10 @@ Exit the Program
 ```
 > 12
 ```
+Build the Database
+```
+ruby lib/dba/build_database.rb
+```
 Then seed the database
 ```
 ruby lib/support/seed.rb

@@ -1,4 +1,4 @@
-# This is the View of the MVC Model
+# This is the VIEW of the MVC Model
 
 require 'sqlite3'
 require 'dba'
