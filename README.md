@@ -30,6 +30,10 @@ If you would like to run this api on your local machine, these installation tips
 
 * [Install Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 * [Install SQLite3](https://rubygems.org/gems/sqlite3-ruby/versions/1.3.3)
+* Install Faker Gem
+```
+gem install faker
+```
 
 ### Setup Database
 After forking the repo and installing Ruby and SQLite3, in console, run the following code to setup the database
