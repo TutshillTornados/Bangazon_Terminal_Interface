@@ -1,3 +1,7 @@
+# Customer Controller
+# Author: Dev Team
+# Creates and saves a new customer 
+
 require 'store'
 require 'sqlite3'
 require 'dba.rb'
