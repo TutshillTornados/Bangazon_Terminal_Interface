@@ -23,7 +23,7 @@ To get started, navigate to the directory of your choice and run the following c
 ```ruby
 git clone https://github.com/TutshillTornados/Bangazon_Terminal_Interface.git
 cd Bangazon_Terminal_Interface
-```ruby
+```
 If you would like to run this api on your local machine, these installation tips are a helpful quick start. 
 
 ### Install
