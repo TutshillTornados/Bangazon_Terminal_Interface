@@ -17,6 +17,13 @@ class Customer
            @zip = zip
            @phone = phone
        end
+
+       def make_customer_active
+        puts "LIST"
+       end
+
+
+
        def self.add_using_questions
            args = {}
            print "What is the customer's FIRST name? "
@@ -43,4 +50,5 @@ class Customer
                db.close
            return true
        end
+
 end
