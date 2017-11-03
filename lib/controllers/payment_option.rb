@@ -16,6 +16,7 @@ class Payment
 
     def self.add_payment_to_active_customer
         system "clear" or system "cls"
+        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
         output_action_header("** Add a payment option **")
         add_payment = self.add_payment_option
         if add_payment.save_payment

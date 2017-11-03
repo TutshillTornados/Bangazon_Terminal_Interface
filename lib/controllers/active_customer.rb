@@ -14,7 +14,7 @@ class ActiveCustomer
         customers.each do |customer_Id, first_name, last_name| 
             print "#{customer_Id}" + ". " + "#{first_name}" + " " + "#{last_name}\n"
         end
-        print "Select Customer "
+        print "Make a Customer Active: "
         customer = gets.chomp
         
         # Calls to DB using the user input based on list that is printed 

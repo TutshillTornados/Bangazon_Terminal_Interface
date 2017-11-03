@@ -74,13 +74,27 @@ class Store
             ActiveCustomer.list
             between_views
         when 3
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Payment.add_payment_to_active_customer
+                output_action_header("\nPayment Added!")
+                between_views
+            else
             Payment.add_payment_to_active_customer
             output_action_header("\nPayment Added!")
             between_views
+            end
         when 4
-            Product.add_product_to_active_customer
-            output_action_header("\nProduct Added!")
-            between_views
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Product.add_product_to_active_customer
+                output_action_header("\nProduct Added!")
+                between_views
+            else
+                Product.add_product_to_active_customer
+                output_action_header("\nProduct Added!")
+                between_views
+            end
         when 5
             puts "5"
         when 6
