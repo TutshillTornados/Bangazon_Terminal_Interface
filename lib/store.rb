@@ -3,10 +3,11 @@
 # Controls the view for the user
 
 require 'sqlite3'
-
 require 'dba.rb'
 require 'controllers/customer'
-require 'controllers/active_customer'
+require 'controllers/order'
+require 'controllers/payment_option'
+require 'controllers/product'
 
 class Store
 
@@ -69,12 +70,8 @@ class Store
             output_action_header("\nCustomer Added!")
             between_views
         when 2
-<<<<<<< HEAD
             ActiveCustomer.list
             between_views
-=======
-            customer_list
->>>>>>> master
         when 3
             puts "3"
         when 4
@@ -116,36 +113,5 @@ class Store
         puts "#{text.upcase.center(60)}"
     end
 
-<<<<<<< HEAD
-=======
-    # def output_product_table(products=[])                 
-    #     print " " + "Product".ljust(33)
-    #     print " " + "Orders".ljust(18) + "\n"
-    #     print " " + "Customers".ljust(18) + "\n"
-    #     print " " + "Revenue".ljust(18) + "\n"
-    #     puts "*" * 90
-    #     products.each do |product|
-    #         line =  " " << product.product.titleize.ljust(33)
-    #         line << " " + product.order.titleize.ljust(24)
-    #         line << " " + product.customers.titleize.ljust(24)
-    #         line << " " + product.revenue.titleize.ljust(24)
-    #         puts line
-    #     end
-    #     puts "No products found" if products.empty?
-    #     puts "*" * 90
-    # end
-        
-# PRINT CUSTOMER LIST
-    def customer_list
-        puts "\n Which customer will be active\n\n".upcase
-        customers = Customer.saved_customers
-        customers.each do |customer_Id, first_name, last_name| 
-            print "#{customer_Id}" + ". " + "#{first_name}" + " " + "#{last_name}\n"
-        end
-    end
-
-
-
->>>>>>> master
 end
     
