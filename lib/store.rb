@@ -150,19 +150,6 @@ class Store
         end
     end
 
-# # ADD PRODUCTS
-#     def add_product_to_active_customer
-#         system "clear" or system "cls"
-#         output_action_header("** Create a Customer Product **")
-#         add_products = Product.add_product
-#         if add_products.save_product
-#             system "clear" or system "cls"
-#             output_action_header("\nProduct Added!")
-#             between_views
-#         else
-#             puts "SAVE ERROR:product not added"
-#         end
-#     end
 
 
 end
