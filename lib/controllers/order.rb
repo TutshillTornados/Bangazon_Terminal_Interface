@@ -1,4 +1,6 @@
 # ORDER CONTROLLER
+# Author: Dev Team
+# Contains the methods that allow user to add products to order. 
 
 require 'store'
 class Order 
