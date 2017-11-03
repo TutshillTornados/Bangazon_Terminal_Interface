@@ -20,8 +20,24 @@ class Product
     def self.add_product_to_active_customer
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-        output_action_header("** Create a Customer Product **")
-        add_products = self.add_product
+
+        print "Would you like to proceed with this active customer? "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y" 
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            add_products = self.add_product
+
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            add_products = self.add_product        
+        end
+
         if add_products.save_product
             system "clear" or system "cls"
         else
@@ -48,7 +64,7 @@ class Product
     def save_product
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        db.execute("INSERT INTO products(price, title, description, quantity, date_added, seller_id) VALUES(?, ?, ?, ?, ?, ?)", ["#{@price}", "#{@title}", "#{@description}", "#{@quantity}", "#{Date.today}" "#{$ACTIVE_CUSTOMER}"])
+        db.execute("INSERT INTO products(price, title, description, quantity, date_added, seller_id) VALUES(?, ?, ?, ?, ?, ?)", ["#{@price}", "#{@title}", "#{@description}", "#{@quantity}", "#{Date.today}", "#{$ACTIVE_CUSTOMER_ID}"])
         #Add active customerId as SellerId to table
         #Add current date to date_added on table
         db.close

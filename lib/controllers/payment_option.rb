@@ -14,17 +14,36 @@ class Payment
         @account = account
     end
 
+
     def self.add_payment_to_active_customer
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-        output_action_header("** Add a payment option **")
-        add_payment = self.add_payment_option
+
+        print "Would you like to proceed with this active customer? "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y" 
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Add a payment option **")
+            add_payment = self.add_payment_option
+            
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Add a payment option **")
+            add_payment = self.add_payment_option
+            
+        end
+
         if add_payment.save_payment
             system "clear" or system "cls"
         else
             puts "SAVE ERROR:payment not added"
         end
     end
+
 
     def self.add_payment_option
         args = {}
@@ -39,7 +58,7 @@ class Payment
     def save_payment
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        db.execute("INSERT INTO payments(name, account) VALUES(?, ?)", ["#{name}", "#{account}"])
+        db.execute("INSERT INTO payments(name, account, customer_id) VALUES(?, ?, ?)", ["#{name}", "#{account}", "#{$ACTIVE_CUSTOMER_ID}"])
         #Add active customerId to table
         db.close
         return true
