@@ -3,8 +3,8 @@
 # Controls the view for the user
 
 require 'sqlite3'
-# require 'dba.rb'
-# require 'customer'
+require 'dba.rb'
+require 'controllers/customer'
 
 p $ACTIVE_CUSTOMER
 

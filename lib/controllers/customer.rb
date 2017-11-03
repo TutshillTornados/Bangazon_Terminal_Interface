@@ -4,7 +4,7 @@
 
 require 'store'
 require 'sqlite3'
-require 'dba.rb'
+
 class Customer
        attr_accessor :first_name, :last_name, :street, :city, :state, :zip, :phone
 
