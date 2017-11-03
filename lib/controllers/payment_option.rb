@@ -1,7 +1,7 @@
 #PAYMENT CONTROLLER 
 
 require 'store'
-class Customer
+class Payment
 
     attr_accessor :name, :account
     def initialize
