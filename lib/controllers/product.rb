@@ -55,10 +55,29 @@ class Product
         return true
     end
 
-    def import_products
+# import_products Pulls all products that are not on an order from the database.    
+# Author: Austin Kuirts    
+    def self.import_products
+        products = []
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products)"
+        products = all_products
     end
-
-    def remove_product
+# remove_product method Prints All Products that are not on an order. User selects a product. Selection Deletes product and returns to the store front.
+# Author: Austin Kuirts
+    def self.remove_product
+        print "\n Choose a Product to delete:\n\n".upcase
+        sleep(0.75)
+        products = self.import_products
+        products.each do |product_id, price, title| 
+        print "#{product_id}" + ". " + "#{title}\n"
+        end
+        print "Choose a Product to delete:\n".upcase
+        product_to_delete = gets.chomp
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        db.execute "DELETE FROM products WHERE product_id = #{product_to_delete}"
+        db.close
+        system "clear" or system "cls"
     end
 
     def update_product

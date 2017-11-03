@@ -99,6 +99,10 @@ class Store
             puts "5"
         when 6
             puts "6"
+        when 7
+            Product.remove_product
+            output_action_header("\nProduct Removed!")
+            between_views
         when 12
             return :quit
         else
