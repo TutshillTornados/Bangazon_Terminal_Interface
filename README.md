@@ -1,6 +1,6 @@
 # Bangazon Terminal Interface - Tutshill Tornados
 
-Welcome to The Command Line Ordering System. This project will be allow a user to interact with a basic product ordering database via a command line interface.
+Welcome to The Command Line Ordering System. This project will allow a user to interact with a basic product ordering database via a command line interface.
 
 - [Get Started](#get-started)
 - [Install](#install)
@@ -24,7 +24,7 @@ To get started, navigate to the directory of your choice and run the following c
 git clone https://github.com/TutshillTornados/Bangazon_Terminal_Interface.git
 cd Bangazon_Terminal_Interface
 ```
-If you would like to run this api on your local machine, these installation tips are a helpful quick start. 
+If you would like to run this app on your local machine, these installation tips are a helpful quick start. 
 
 ### Install
 
@@ -83,6 +83,11 @@ ruby lib/database_admin/build_database.rb
 
 ## Ordering System Interface
 Below is a view of the main menu for the terminal interface.
+
+To begin the program, run:
+```ruby
+ruby init.rb
+```
 
 ### Main Menu
 ```ruby
