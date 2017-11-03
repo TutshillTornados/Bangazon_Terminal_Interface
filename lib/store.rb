@@ -76,7 +76,9 @@ class Store
         when 3
             puts "3"
         when 4
-            add_product_to_active_customer
+            Product.add_product_to_active_customer
+            output_action_header("\nProduct Added!")
+            between_views
         when 5
             puts "5"
         when 6
@@ -148,19 +150,19 @@ class Store
         end
     end
 
-# ADD PRODUCTS
-    def add_product_to_active_customer
-        system "clear" or system "cls"
-        output_action_header("** Create a Customer Product **")
-        add_products = Product.add_product
-        if add_products.save_product
-            system "clear" or system "cls"
-            output_action_header("\nProduct Added!")
-            between_views
-        else
-            puts "SAVE ERROR:product not added"
-        end
-    end
+# # ADD PRODUCTS
+#     def add_product_to_active_customer
+#         system "clear" or system "cls"
+#         output_action_header("** Create a Customer Product **")
+#         add_products = Product.add_product
+#         if add_products.save_product
+#             system "clear" or system "cls"
+#             output_action_header("\nProduct Added!")
+#             between_views
+#         else
+#             puts "SAVE ERROR:product not added"
+#         end
+#     end
 
 
 end

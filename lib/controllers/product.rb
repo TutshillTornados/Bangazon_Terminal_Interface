@@ -13,6 +13,19 @@ class Product
         @quantity = quantity
     end
 
+
+    # ADD PRODUCTS
+    def self.add_product_to_active_customer
+        system "clear" or system "cls"
+        output_action_header("** Create a Customer Product **")
+        add_products = self.add_product
+        if add_products.save_product
+            system "clear" or system "cls"
+        else
+            puts "SAVE ERROR:product not added"
+        end
+    end
+
     def self.add_product
         args = {}
         print "What is the price of the product? "
@@ -47,5 +60,11 @@ class Product
 
     def update_product
     end
+
+    private
+    
+        def self.output_action_header(text)
+            puts "#{text.upcase.center(60)}"
+        end
 
 end
