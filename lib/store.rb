@@ -5,6 +5,7 @@
 require 'sqlite3'
 require 'dba'
 require 'customer'
+require 'product'
 
 class Store
     
@@ -68,7 +69,7 @@ class Store
         when 3
             puts "3"
         when 4
-            puts "4"
+            add_product_to_active_customer
         when 5
             puts "5"
         when 6
@@ -138,6 +139,20 @@ class Store
             print "#{customer_Id}" + ". " + "#{first_name}" + " " + "#{last_name}\n"
         end
     end
+
+    def add_product_to_active_customer
+        system "clear" or system "cls"
+        output_action_header("** Create a Customer Product **")
+        add_product = Product.add_product
+        if add_product.save_product
+            system "clear" or system "cls"
+            output_action_header("\nProduct Added!")
+            bewtween_views
+        else
+            puts "SAVE ERROR:product not added"
+        end
+    end
+
 
 end
     
