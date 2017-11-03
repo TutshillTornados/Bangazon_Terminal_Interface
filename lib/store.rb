@@ -73,7 +73,9 @@ class Store
             ActiveCustomer.list
             between_views
         when 3
-            puts "3"
+            Payment.add_payment_to_active_customer
+            output_action_header("\nPayment Added!")
+            between_views
         when 4
             Product.add_product_to_active_customer
             output_action_header("\nProduct Added!")

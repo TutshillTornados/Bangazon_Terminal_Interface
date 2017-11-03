@@ -1,4 +1,6 @@
 #PRODUCT CONTROLLER 
+# Author: Dev Team
+# Contains methods to allow user to add product, list products, update product information, and remove product from database. 
 
 require 'store'
 require 'date'
