@@ -72,7 +72,7 @@ class Store
         when 1
             create_a_customer_account
         when 2
-            list
+            customer_list
         when 3
             puts "3"
         when 4
@@ -102,7 +102,7 @@ class Store
     end
 
     # Between actions, the menu displays to prompt the customer
-    def bewtween_views
+    def between_views
         output_action_header("\n*** What Would You Like To Do Next? ***")
         puts "1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!"
     end
@@ -139,7 +139,8 @@ class Store
     #     puts "*" * 90
     # end
         
-    def list
+# PRINT CUSTOMER LIST
+    def customer_list
         puts "\n Which customer will be active\n\n".upcase
         customers = Customer.saved_customers
         customers.each do |customer_Id, first_name, last_name| 
@@ -147,14 +148,15 @@ class Store
         end
     end
 
+# ADD PRODUCTS
     def add_product_to_active_customer
         system "clear" or system "cls"
         output_action_header("** Create a Customer Product **")
-        add_product = Product.add_product
-        if add_product.save_product
+        add_products = Product.add_product
+        if add_products.save_product
             system "clear" or system "cls"
             output_action_header("\nProduct Added!")
-            bewtween_views
+            between_views
         else
             puts "SAVE ERROR:product not added"
         end
