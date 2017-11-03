@@ -31,6 +31,6 @@ class ActiveCustomer
         
         # Assigning selected customer ID to $ACTIVE_CUSTOMER_ID
         $ACTIVE_CUSTOMER_ID = selected_customer[0][0]
-        p "Selected Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}"
+        puts "Selected Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}"
     end
 end
