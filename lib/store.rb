@@ -6,7 +6,10 @@ require 'sqlite3'
 
 require 'dba.rb'
 require 'controllers/customer'
+require 'controllers/order'
+require 'controllers/payment_option'
 require 'controllers/product'
+
 p $ACTIVE_CUSTOMER
 
 
@@ -74,7 +77,9 @@ class Store
         when 2
             customer_list
         when 3
-            puts "3"
+            Payment.add_payment_to_active_customer
+            output_action_header("\nPayment Added!")
+            between_views
         when 4
             Product.add_product_to_active_customer
             output_action_header("\nProduct Added!")
@@ -97,7 +102,7 @@ class Store
         if add_customer.save_customer
             system "clear" or system "cls"
             output_action_header("\nCustomer Added!")
-            bewtween_views
+            between_views
         else
             puts "SAVE ERROR: Customer not added"
         end
@@ -149,7 +154,6 @@ class Store
             print "#{customer_Id}" + ". " + "#{first_name}" + " " + "#{last_name}\n"
         end
     end
-
 
 
 end
