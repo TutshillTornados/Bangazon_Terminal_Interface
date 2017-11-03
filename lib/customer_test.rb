@@ -6,7 +6,7 @@
 require 'minitest/autorun'
 require "sqlite3"
 $:.unshift File.join(File.dirname(__FILE__), ".")
-require_relative 'customer'
+require 'controllers/customer'
 
 
 class CustomerTest < Minitest::Test
