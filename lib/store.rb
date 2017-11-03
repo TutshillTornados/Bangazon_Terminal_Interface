@@ -64,7 +64,7 @@ class Store
         when 1
             create_a_customer_account
         when 2
-            puts "2"
+            list
         when 3
             puts "3"
         when 4
@@ -131,5 +131,13 @@ class Store
     #     puts "*" * 90
     # end
         
+    def list
+        puts "\n Which customer will be active\n\n".upcase
+        customers = Customer.saved_customers
+        customers.each do |customer_Id, first_name, last_name| 
+            print "#{customer_Id}" + ". " + "#{first_name}" + " " + "#{last_name}\n"
+        end
+    end
+
 end
     
