@@ -8,6 +8,7 @@ require 'controllers/customer'
 require 'controllers/order'
 require 'controllers/payment_option'
 require 'controllers/product'
+require 'controllers/active_customer.rb'
 
 class Store
 
