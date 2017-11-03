@@ -3,15 +3,17 @@
 # Controls the view for the user
 
 require 'sqlite3'
-require 'dba'
-require 'customer'
+require 'dba.rb'
+require 'controllers/customer'
+
+p $ACTIVE_CUSTOMER
 
 class Store
-    
+
+
     class Config
         @@actions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         def self.actions; @@actions; end
-        $active_customer
     end
 
     #Initializes the DB and begins process to see if it exists
@@ -41,6 +43,10 @@ class Store
             result = do_action(action, args)
         end
         conclusion
+    end
+
+    def set_active_customer
+
     end
 
     def get_action

@@ -4,7 +4,7 @@
 
 require 'store'
 require 'sqlite3'
-require 'dba.rb'
+
 class Customer
        attr_accessor :first_name, :last_name, :street, :city, :state, :zip, :phone
 
@@ -17,6 +17,13 @@ class Customer
            @zip = zip
            @phone = phone
        end
+
+       def make_customer_active
+        puts "LIST"
+       end
+
+
+
        def self.add_using_questions
            args = {}
            print "What is the customer's FIRST name? "
