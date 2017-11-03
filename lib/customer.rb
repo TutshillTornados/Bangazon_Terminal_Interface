@@ -43,4 +43,15 @@ class Customer
                db.close
            return true
        end
+
+       def self.saved_customers
+        customers = []
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        all_customers = db.prepare "SELECT * From customers"
+
+        # puts all_customers.customer_id
+        # puts all_customers.first_name
+        # puts all_customers.last_name
+        customers = all_customers
+       end 
 end
