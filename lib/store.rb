@@ -3,6 +3,7 @@
 # Controls the view for the user
 
 require 'sqlite3'
+
 require 'dba.rb'
 require 'controllers/customer'
 require 'controllers/order'
@@ -10,6 +11,7 @@ require 'controllers/payment_option'
 require 'controllers/product'
 
 p $ACTIVE_CUSTOMER
+
 
 class Store
 
@@ -79,7 +81,9 @@ class Store
             output_action_header("\nPayment Added!")
             between_views
         when 4
-            puts "4"
+            Product.add_product_to_active_customer
+            output_action_header("\nProduct Added!")
+            between_views
         when 5
             puts "5"
         when 6
@@ -142,6 +146,7 @@ class Store
     #     puts "*" * 90
     # end
         
+# PRINT CUSTOMER LIST
     def customer_list
         puts "\n Which customer will be active\n\n".upcase
         customers = Customer.saved_customers
