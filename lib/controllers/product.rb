@@ -64,7 +64,7 @@ class Product
     def save_product
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        db.execute("INSERT INTO products(price, title, description, quantity, date_added, seller_id) VALUES(?, ?, ?, ?, ?, ?)", ["#{@price}", "#{@title}", "#{@description}", "#{@quantity}", "#{Date.today}" "#{$ACTIVE_CUSTOMER}"])
+        db.execute("INSERT INTO products(price, title, description, quantity, date_added, seller_id) VALUES(?, ?, ?, ?, ?, ?)", ["#{@price}", "#{@title}", "#{@description}", "#{@quantity}", "#{Date.today}", "#{$ACTIVE_CUSTOMER_ID}"])
         #Add active customerId as SellerId to table
         #Add current date to date_added on table
         db.close

@@ -58,7 +58,7 @@ class Payment
     def save_payment
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        db.execute("INSERT INTO payments(name, account) VALUES(?, ?)", ["#{name}", "#{account}"])
+        db.execute("INSERT INTO payments(name, account, customer_id) VALUES(?, ?, ?)", ["#{name}", "#{account}", "#{$ACTIVE_CUSTOMER_ID}"])
         #Add active customerId to table
         db.close
         return true
