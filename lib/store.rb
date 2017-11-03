@@ -1,21 +1,18 @@
 # This is the VIEW of the MVC Model
-# Author: Dr. Teresa Vasquez
+# Author: DEV TEAM
 # Controls the view for the user
 
 require 'sqlite3'
-
 require 'dba.rb'
 require 'controllers/customer'
 require 'controllers/order'
 require 'controllers/payment_option'
 require 'controllers/product'
-
-p $ACTIVE_CUSTOMER
-
+require 'controllers/active_customer.rb'
 
 class Store
 
-
+    #configures app so that actions are set and ready for user input from main menu
     class Config
         @@actions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         def self.actions; @@actions; end
@@ -50,10 +47,7 @@ class Store
         conclusion
     end
 
-    def set_active_customer
-
-    end
-
+    # stores user input from main menu options
     def get_action
         action = nil
         # Keep asking for user input until they input a valid action
@@ -73,17 +67,34 @@ class Store
     def do_action(action, args=[])
         case action
         when 1
-            create_a_customer_account
+            Customer.create_a_customer_account
+            output_action_header("\nCustomer Added!")
+            between_views
         when 2
-            customer_list
+            ActiveCustomer.list
+            between_views
         when 3
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Payment.add_payment_to_active_customer
+                output_action_header("\nPayment Added!")
+                between_views
+            else
             Payment.add_payment_to_active_customer
             output_action_header("\nPayment Added!")
             between_views
+            end
         when 4
-            Product.add_product_to_active_customer
-            output_action_header("\nProduct Added!")
-            between_views
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Product.add_product_to_active_customer
+                output_action_header("\nProduct Added!")
+                between_views
+            else
+                Product.add_product_to_active_customer
+                output_action_header("\nProduct Added!")
+                between_views
+            end
         when 5
             puts "5"
         when 6
@@ -95,29 +106,18 @@ class Store
         end
     end
 
-    def create_a_customer_account
-        system "clear" or system "cls"
-        output_action_header("** Create a Customer Account **")
-        add_customer = Customer.add_using_questions
-        if add_customer.save_customer
-            system "clear" or system "cls"
-            output_action_header("\nCustomer Added!")
-            between_views
-        else
-            puts "SAVE ERROR: Customer not added"
-        end
-    end
-
     # Between actions, the menu displays to prompt the customer
     def between_views
         output_action_header("\n*** What Would You Like To Do Next? ***")
         puts "1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!"
     end
 
+    # Prints intro and welcome message/main menu to interface
     def introduction
         puts "1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!"
     end
     
+    # Upon selecting 12: LEAVE BANGAZON - Exit message
     def conclusion
         system "clear" or system "cls"
         output_action_header("**  Thank You For Using The Bangazon Command Line Ordering System  **")
@@ -125,36 +125,10 @@ class Store
 
     private
 
+    # Formats headers to be sexy
     def output_action_header(text)
         puts "#{text.upcase.center(60)}"
     end
-
-    # def output_product_table(products=[])                 
-    #     print " " + "Product".ljust(33)
-    #     print " " + "Orders".ljust(18) + "\n"
-    #     print " " + "Customers".ljust(18) + "\n"
-    #     print " " + "Revenue".ljust(18) + "\n"
-    #     puts "*" * 90
-    #     products.each do |product|
-    #         line =  " " << product.product.titleize.ljust(33)
-    #         line << " " + product.order.titleize.ljust(24)
-    #         line << " " + product.customers.titleize.ljust(24)
-    #         line << " " + product.revenue.titleize.ljust(24)
-    #         puts line
-    #     end
-    #     puts "No products found" if products.empty?
-    #     puts "*" * 90
-    # end
-        
-# PRINT CUSTOMER LIST
-    def customer_list
-        puts "\n Which customer will be active\n\n".upcase
-        customers = Customer.saved_customers
-        customers.each do |customer_Id, first_name, last_name| 
-            print "#{customer_Id}" + ". " + "#{first_name}" + " " + "#{last_name}\n"
-        end
-    end
-
 
 end
     
