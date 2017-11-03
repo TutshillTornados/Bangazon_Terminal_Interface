@@ -43,6 +43,7 @@ class Customer
            args[:phone] = gets.chomp.upcase.strip
            return self.new(args)
        end
+
        def save_customer
            return false unless DatabaseAdmin.file_useable?
                db = SQLite3::Database.open("bangazon_store.sqlite")
