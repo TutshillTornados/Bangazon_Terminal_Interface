@@ -48,7 +48,7 @@ class Product
     def self.add_product
         args = {}
         print "What is the price of the product? "
-        args[:price] = gets.chomp.upcase.strip
+        args[:price] = gets.chomp.upcase.strip.to_i
 
         print "What is the title of the product? "
         args[:title] = gets.chomp.upcase.strip
