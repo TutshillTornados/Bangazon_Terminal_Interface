@@ -96,7 +96,17 @@ class Store
                 between_views
             end
         when 5
-            puts "5"
+            if $ACTIVE_CUSTOMER_ID == nil
+                Product.list_saved_products
+                # Order.add_product_to_active_order
+                # output_action_header("\nProduct Added to Order!")
+                # between_views
+            else
+                Product.list_saved_products
+                # Order.add_product_to_active_order
+                # output_action_header("\nProduct Added to Order!")
+                # between_views
+            end
         when 6
             puts "6"
         when 12

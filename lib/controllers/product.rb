@@ -49,13 +49,24 @@ class Product
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
         db.execute("INSERT INTO products(price, title, description, quantity, date_added, seller_id) VALUES(?, ?, ?, ?, ?, ?)", ["#{@price}", "#{@title}", "#{@description}", "#{@quantity}", "#{Date.today}" "#{$ACTIVE_CUSTOMER}"])
-        #Add active customerId as SellerId to table
-        #Add current date to date_added on table
         db.close
         return true
     end
 
     def import_products
+    end
+
+    def self.list_saved_products
+        products = []
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        all_products = db.prepare "SELECT * From products"
+        products = all_products
+
+        puts "\n Which product would you like?\n\n".upcase
+        products.each do |product_id, price, title| 
+            print "#{product_id}" + ". " + "#{title}\n"
+        end
+        print "666. Done adding products"
     end
 
     def remove_product

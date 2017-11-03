@@ -13,20 +13,40 @@ require 'controllers/payment_option'
 
 class PaymentTest < Minitest::Test
     def setup
-        @testPayment = Payment.new(name:"VISAH", account:1234123412341234)
+        @testPayment = Payment.new(name:44, account:1234123412341234)
     end
 
     def test_initialize
         assert_raises ArgumentError do
-            Payment.new()
+            Payment.new
         end
-        assert_instance_of Payment,
-        @testPayment
+
+        assert_raises ArgumentError do
+            Payment.new("arg1")
+        end
+
+        assert_raises ArgumentError do
+            Payment.new("arg1", "arg2")
+        end
+
+        @tp = Payment.new(1, 2)
+        assert_equal 1, @tp.payment_name
+        assert_equal 2, @tp.account_type
+
+    
+        unless @tp.payment_name.is_a?(String)
+        else
+            assert_raises ArgumentError do
+            end
+        end
+
     end
+
 
     def test_save_Payment
         p @testPayment
         @testPayment.save_payment
         # assert_equal true, worked
     end
+
 end
