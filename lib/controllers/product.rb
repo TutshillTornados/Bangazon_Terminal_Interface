@@ -60,7 +60,7 @@ class Product
     def self.import_products
         products = []
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products)"
+        all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products) AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
         products = all_products
     end
 # remove_product method Prints All Products that are not on an order. User selects a product. Selection Deletes product and returns to the store front.
@@ -69,15 +69,27 @@ class Product
         print "\n Choose a Product to delete:\n\n".upcase
         sleep(0.75)
         products = self.import_products
-        products.each do |product_id, price, title| 
-        print "#{product_id}" + ". " + "#{title}\n"
+        if products.any? == false
+            print "This customer has no products. Would you like to add a product? Y/N"
+            selection = gets.upcase.chomp
+            if selection == "Y"
+                self.add_product_to_active_customer
+            elsif selection =="N"
+                store.launch!
+            else
+                print "Unrecongnized selection"
+            end
+        else
+            products.each do |product_id, price, title| 
+            print "#{product_id}" + ". " + "#{title}\n"
+            end
+            print "Choose a Product to delete:\n".upcase
+            product_to_delete = gets.chomp
+            db = SQLite3::Database.open("bangazon_store.sqlite")
+            db.execute "DELETE FROM products WHERE product_id = #{product_to_delete}"
+            db.close
+            system "clear" or system "cls"
         end
-        print "Choose a Product to delete:\n".upcase
-        product_to_delete = gets.chomp
-        db = SQLite3::Database.open("bangazon_store.sqlite")
-        db.execute "DELETE FROM products WHERE product_id = #{product_to_delete}"
-        db.close
-        system "clear" or system "cls"
     end
 
     def update_product
