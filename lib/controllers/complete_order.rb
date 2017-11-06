@@ -12,8 +12,13 @@ class CompleteOrder
         print "Would you like to proceed with this active customer? "
         proceed = gets.upcase.chomp
 
+        unless proceed == "Y"
+        # if the user does not want to proceed with the currect active user, they can choose another active user and begin the process
+        ActiveCustomer.list
+        self.get_active_user_order
+        
         # if user selects to proceed with current active user, finds open order
-        if proceed == "Y"
+        else
         db = SQLite3::Database.open("bangazon_store.sqlite")
         order = db.execute "SELECT * FROM orders WHERE payment_id IS NULL AND customer_id = #{$ACTIVE_CUSTOMER_ID}"
         db.close
@@ -81,9 +86,9 @@ class CompleteOrder
         end     
         end
 
-        # if the user does not want to proceed with the currect active user, they can choose another active user and begin the process
-        else
-        ActiveCustomer.list
-        self.get_active_user_order
+        # # if the user does not want to proceed with the currect active user, they can choose another active user and begin the process
+        # else
+        # ActiveCustomer.list
+        # self.get_active_user_order
     end
 end
