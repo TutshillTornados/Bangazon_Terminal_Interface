@@ -18,12 +18,11 @@ class CompleteOrderTest < Minitest::Test
     end
   
     def test_error_when_db_call_returns_empty_array
-        customer = 522
+        customer = 22
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        messed = db.execute "SELECT * FROM orders WHERE customer_id = ?", customer
+        messed = db.execute "SELECT * FROM orders WHERE customer_id = ? AND payment_id IS NULL", customer
         db.close
-        messed_up = messed.any?
-        assert_equal false, messed_up
+        assert_equal true, messed.any?
     end
 
 
