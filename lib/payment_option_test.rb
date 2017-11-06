@@ -13,7 +13,8 @@ require 'controllers/payment_option'
 
 class PaymentTest < Minitest::Test
     def setup
-        @testPayment = Payment.new(name:"VISAH", account:1234123412341234)
+        @testPayment = Payment.new(card_name:"AMEXs", account:1234123412341234)
+        # Payment.new(name:"VISA")
     end
 
     def test_initialize
@@ -25,8 +26,19 @@ class PaymentTest < Minitest::Test
     end
 
     def test_save_Payment
-        p @testPayment
+        # print @testPayment
         @testPayment.save_payment
         # assert_equal true, worked
     end
+
+    # puts @testPayment
+
+    def test_customer_input_equals_accepted_payment_methods
+        assert (@testPayment.card_name == "VISA" || @testPayment.card_name == "AMEX" || @testPayment.card_name == "BANK" || @testPayment.card_name == "MC")
+    end
+
+    def test_payment_type_gets_correct_account_int
+        assert_equal 16, @testPayment.account.to_s.length
+    end
+
 end

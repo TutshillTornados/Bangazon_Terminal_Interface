@@ -7,10 +7,10 @@ require 'sqlite3'
 
 class Payment
 
-    attr_accessor :name, :account
+    attr_accessor :card_name, :account
 
-    def initialize(name:, account:)
-        @name = name
+    def initialize(card_name:, account:)
+        @card_name = card_name
         @account = account
     end
 
@@ -36,29 +36,40 @@ class Payment
             add_payment = self.add_payment_option
             
         end
-
+        
         if add_payment.save_payment
             system "clear" or system "cls"
         else
             puts "SAVE ERROR:payment not added"
         end
     end
-
-
+    
+    
+    
     def self.add_payment_option
         args = {}
-        print "Enter payment type (e.g. AmEx, Visa, Checking) "
-        args[:name] = gets.chomp.upcase.strip
+        print "Enter payment type (e.g. AMEX, VISA, MC, BANK) "
+        args[:card_name] = gets.upcase.chomp
+        unless args[:card_name] == "VISA"
+            puts "PAYMENT TYPE INVALID"
+            self.add_payment_option
 
-        print "Enter account number "
-        args[:account] = gets.chomp.upcase.strip
-        return self.new(args)
+        else
+            print "Enter account number"
+            args[:account] = gets.chomp.upcase.strip
+            unless args[:account].length == 16
+                puts "ACCOUNT NUMBER INVALID"
+                self.add_payment_option
+            else
+            return self.new(args)
+            end
+        end
     end
 
     def save_payment
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        db.execute("INSERT INTO payments(name, account, customer_id) VALUES(?, ?, ?)", ["#{name}", "#{account}", "#{$ACTIVE_CUSTOMER_ID}"])
+        db.execute("INSERT INTO payments(name, account, customer_id) VALUES(?, ?, ?)", ["#{card_name}", "#{account}", "#{$ACTIVE_CUSTOMER_ID}"])
         #Add active customerId to table
         db.close
         return true
