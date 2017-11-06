@@ -6,7 +6,6 @@ $:.unshift File.join(File.dirname(__FILE__), ".")
 require 'store'
 
 class ActiveCustomer
-    
     # prints list of customers in DB from customers table and returns value based on user input
     def self.list
         puts "\n Which customer will be active\n\n".upcase
@@ -22,6 +21,7 @@ class ActiveCustomer
         selected_customer = db.execute "SELECT * FROM customers WHERE customer_id = ?", customer
         db.close
 
+        unless selected_customer.empty?
         # Assigning selected customer to $ACTIVE_CUSTOMER
         $ACTIVE_CUSTOMER = { 
             id: selected_customer[0][0], 
@@ -31,6 +31,11 @@ class ActiveCustomer
         
         # Assigning selected customer ID to $ACTIVE_CUSTOMER_ID
         $ACTIVE_CUSTOMER_ID = selected_customer[0][0]
-        p "Selected Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}"
+        puts "Selected Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}"
+
+        else
+            puts "That Customer Doesn't Exist! Try Again..."
+            self.list
+        end
     end
 end

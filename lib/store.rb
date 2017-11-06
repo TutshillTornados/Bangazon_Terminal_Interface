@@ -36,17 +36,25 @@ class Store
     end
 
     # This begins the program and tells what to do when specific actions happen
-    def launch!
-        introduction
-        # action loop
-        result = nil
-        until result == :quit do
-            action, args = get_action
-            result = do_action(action, args)
+        def launch!
+            introduction
+            # action loop
+            result = nil
+            until result == :quit do
+                action, args = get_action
+                result = do_action(action, args)
+            end
+            conclusion
         end
-        conclusion
-    end
-
+        
+        def get_launch
+            result = nil
+            until result == :quit do
+                action, args = get_action
+                result = do_action(action, args)
+            end
+            conclusion
+        end
     # stores user input from main menu options
     def get_action
         action = nil
@@ -80,9 +88,9 @@ class Store
                 output_action_header("\nPayment Added!")
                 between_views
             else
-            Payment.add_payment_to_active_customer
-            output_action_header("\nPayment Added!")
-            between_views
+                Payment.add_payment_to_active_customer
+                output_action_header("\nPayment Added!")
+                between_views
             end
         when 4
             if $ACTIVE_CUSTOMER_ID == nil
@@ -98,11 +106,27 @@ class Store
         when 5
             puts "5"
         when 6
-            puts "6"
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                # Product.add_product_to_active_customer
+                # output_action_header("\nProduct Added!")
+                between_views
+            else
+                # Product.add_product_to_active_customer
+                # output_action_header("\nProduct Added!")
+                between_views
+            end
         when 7
-            Product.remove_product
-            output_action_header("\nProduct Removed!")
-            between_views
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Product.remove_product
+                output_action_header("\nProduct Removed!")
+                between_views
+            else
+                Product.remove_product
+                output_action_header("\nProduct Removed!")
+                between_views
+            end
         when 12
             return :quit
         else
