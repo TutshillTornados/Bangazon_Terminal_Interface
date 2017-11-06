@@ -80,6 +80,19 @@ def self.import_products
     products = all_products
 end
 
+def self.list_saved_products
+    products = []
+    db = SQLite3::Database.open("bangazon_store.sqlite")
+    all_products = db.prepare "SELECT * From products"
+    products = all_products
+
+    puts "\n Which product would you like?\n\n".upcase
+    products.each do |product_id, price, title| 
+        print "#{product_id}" + ". " + "#{title}\n"
+    end
+    print "666. Done adding products"
+end
+
 def self.remove_product
     sleep(0.75)
     productIds = []
