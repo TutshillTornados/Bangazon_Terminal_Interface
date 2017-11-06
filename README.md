@@ -12,6 +12,7 @@ Welcome to The Command Line Ordering System. This project will allow a user to i
   - [Drop Individual Tables](#drop-individual-tables)
   - [Build the Database](#build-the-database)
 - [Ordering System Interface](#ordering-system-interface)
+- [Testing](#testing)
 - [Software Versions](#software-versions)
 - [Contribute](#contribute)
 - [Report Bugs](#report-bugs)
@@ -90,6 +91,7 @@ ruby init.rb
 ```
 
 ### Main Menu
+
 ```ruby
 *********************************************************
 **  Welcome to Bangazon! Command Line Ordering System  **
@@ -108,7 +110,13 @@ ruby init.rb
 12. Leave Bangazon!
 >
 ```
+
+![alt text](http://www.drteresavasquez.com/wp-content/uploads/2017/11/orderinterface.png "Bangazon! Command Line Ordering System")
+
 [See more details about the interface](https://github.com/TutshillTornados/Bangazon_Terminal_Interface/blob/master/ORDERING_SYSTEM_INTERFACE.md)
+
+## Testing
+
 
 ## Software Versions
 ```ruby

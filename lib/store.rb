@@ -80,9 +80,9 @@ class Store
                 output_action_header("\nPayment Added!")
                 between_views
             else
-            Payment.add_payment_to_active_customer
-            output_action_header("\nPayment Added!")
-            between_views
+                Payment.add_payment_to_active_customer
+                output_action_header("\nPayment Added!")
+                between_views
             end
         when 4
             if $ACTIVE_CUSTOMER_ID == nil

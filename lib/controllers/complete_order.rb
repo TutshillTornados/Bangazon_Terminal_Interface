@@ -1,7 +1,10 @@
 # Completes a customer's order
 # Author: Dr. T
 
+class CompleteOrder
 # A customer can only have one open order at a time, but it is possible for the customer to have no open orders
+    
+
 
 # Given a customer has been made active in the program
 # When the user selects the option to complete an order
@@ -24,4 +27,4 @@
 
 
 ## RAISE ERRORS IN THE CODE BLOCK!!!!!
-
+end
