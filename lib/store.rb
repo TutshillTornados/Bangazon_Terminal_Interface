@@ -36,17 +36,25 @@ class Store
     end
 
     # This begins the program and tells what to do when specific actions happen
-    def launch!
-        introduction
-        # action loop
-        result = nil
-        until result == :quit do
-            action, args = get_action
-            result = do_action(action, args)
+        def launch!
+            introduction
+            # action loop
+            result = nil
+            until result == :quit do
+                action, args = get_action
+                result = do_action(action, args)
+            end
+            conclusion
         end
-        conclusion
-    end
-
+        
+        def get_launch
+            result = nil
+            until result == :quit do
+                action, args = get_action
+                result = do_action(action, args)
+            end
+            conclusion
+        end
     # stores user input from main menu options
     def get_action
         action = nil
