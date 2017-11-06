@@ -71,65 +71,82 @@ class Product
         return true
     end
 
-# import_products Pulls all products that are not on an order from the database.    
-# Author: Austin Kuirts    
-def self.import_products
-    products = []
-    db = SQLite3::Database.open("bangazon_store.sqlite")
-    all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products) AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
-    products = all_products
-end
-
-def self.list_saved_products
-    products = []
-    db = SQLite3::Database.open("bangazon_store.sqlite")
-    all_products = db.prepare "SELECT * From products"
-    products = all_products
-
-    puts "\n Which product would you like?\n\n".upcase
-    products.each do |product_id, price, title| 
-        print "#{product_id}" + ". " + "#{title}\n"
+    # import_products Pulls all products that are not on an order from the database.    
+    # Author: Austin Kurtis    
+    def self.import_products
+        products = []
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products) AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
+        products = all_products
     end
-    print "666. Done adding products"
-end
 
-def self.remove_product
-    sleep(0.75)
-    productIds = []
-    products = self.import_products
-    print "\n"
-    products.each do |product_id, price, title| 
-    print "#{product_id}" + ". " + "#{title}\n"
-    productIds.push(product_id)
-    print "\n Choose a Product to delete:".upcase
-    end
+    # list_saved_products pulls all products from database and organizes them based on product_id.
+    # Author: Matt Minner and Daniel Greene. 
+    def self.list_saved_products
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        all_products = db.prepare "SELECT * From products"
+        products = all_products.to_a
+
+        puts "\n Which product would you like?\n\n".upcase
+        products.each do |product_id, price, title| 
+            print "#{product_id}" + ". " + "#{title}\n"
+        end
+        print "#{products.length + 1}. Type done to exit\n"
+        save_product_to_order
         
-    if productIds.empty?
-        print "This customer has no products. Would you like to add a product? Y/N: "
-        selection = gets.upcase.chomp
-       if selection == "Y"
-            self.add_product_to_active_customer
-            elsif selection =="N"
+    end
+    
+    # gets the user input and queries the database based on product_id. Unless it's the last selection which exits to main menu. 
+    def self.save_product_to_order
+        product_to_add = gets.upcase.chomp
+        if product_to_add == "DONE"
+            
         else
-            print "Unrecongnized selection".upcase
-            self.remove_product
-       end
-    else
-        product_to_delete = gets.chomp.to_i
-        if productIds.include?(product_to_delete)
+            product_to_add.to_i
             db = SQLite3::Database.open("bangazon_store.sqlite")
-            db.execute "DELETE FROM products WHERE product_id = #{product_to_delete} AND seller_id = #{$ACTIVE_CUSTOMER_ID} "
-            db.close
-            system "clear" or system "cls"
-        else
-            print "Unrecongnized selection\n".upcase
+            get_product = db.prepare "SELECT * From products where product_id = #{product_to_add}"
+            print get_product.to_a
+            self.list_saved_products
+        end
+    end
+
+    def self.remove_product
+        sleep(0.75)
+        productIds = []
+        products = self.import_products
+        print "\n"
+        products.each do |product_id, price, title| 
+        print "#{product_id}" + ". " + "#{title}\n"
+        productIds.push(product_id)
+        print "\n Choose a Product to delete:".upcase
+        end
+            
+        if productIds.empty?
+            print "This customer has no products. Would you like to add a product? Y/N: "
+            selection = gets.upcase.chomp
+        if selection == "Y"
+                self.add_product_to_active_customer
+                elsif selection =="N"
+            else
+                print "Unrecongnized selection".upcase
                 self.remove_product
         end
+        else
+            product_to_delete = gets.chomp.to_i
+            if productIds.include?(product_to_delete)
+                db = SQLite3::Database.open("bangazon_store.sqlite")
+                db.execute "DELETE FROM products WHERE product_id = #{product_to_delete} AND seller_id = #{$ACTIVE_CUSTOMER_ID} "
+                db.close
+                system "clear" or system "cls"
+            else
+                print "Unrecongnized selection\n".upcase
+                    self.remove_product
+            end
 
+        end
+
+        
     end
-
-     
-end
 
 
     def update_product
