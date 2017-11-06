@@ -1,4 +1,8 @@
 # Completes a customer's order
+# checks if there is an open order
+# if not, redirects to add products
+# if so, adds payment to close order
+# if no payment, allows user to add payment to customer
 # Author: Dr. T
 
 require 'payment_option'
@@ -85,10 +89,5 @@ class CompleteOrder
             end
         end     
         end
-
-        # # if the user does not want to proceed with the currect active user, they can choose another active user and begin the process
-        # else
-        # ActiveCustomer.list
-        # self.get_active_user_order
     end
 end

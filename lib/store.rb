@@ -47,15 +47,7 @@ class Store
             end
             conclusion
         end
-        
-        def get_launch
-            result = nil
-            until result == :quit do
-                action, args = get_action
-                result = do_action(action, args)
-            end
-            conclusion
-        end
+
     # stores user input from main menu options
     def get_action
         action = nil
