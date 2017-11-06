@@ -9,6 +9,7 @@ require 'controllers/order'
 require 'controllers/payment_option'
 require 'controllers/product'
 require 'controllers/active_customer.rb'
+require 'controllers/complete_order.rb'
 
 class Store
 
@@ -108,10 +109,12 @@ class Store
         when 6
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
+                CompleteOrder.get_active_user_order
                 # Product.add_product_to_active_customer
                 # output_action_header("\nProduct Added!")
                 between_views
             else
+                CompleteOrder.get_active_user_order
                 # Product.add_product_to_active_customer
                 # output_action_header("\nProduct Added!")
                 between_views

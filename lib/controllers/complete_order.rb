@@ -9,14 +9,14 @@ class CompleteOrder
 # Then the user should be prompted to choose one of the active customer's payment options
 
 # And when one is chosen, the payment option should be added to the open order
-    def get_active_user_order
+    def self.get_active_user_order
         db = SQLite3::Database.open("bangazon_store.sqlite")
-        order = db.execute "SELECT * FROM orders WHERE customer_id ? = AND payment_id IS NULL", $ACTIVE_CUSTOMER_ID
+        order = db.execute("SELECT * FROM orders WHERE (customer_id, payment_id) VALUES(?, ?)", ["#{$ACTIVE_CUSTOMER_ID}", "NULL"])
         db.close
         unless order.any?
-            
+            "Don't got!"
         else
-
+            "Got an order"
         end
     end
 # If no products have been selected yet
