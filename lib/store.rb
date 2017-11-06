@@ -62,8 +62,8 @@ class Store
         # Keep asking for user input until they input a valid action
         until Store::Config.actions.include?(action)
             system "clear" or system "cls" if action
-            output_action_header("*** Input Error ***") if action
-            puts "Select a number to run the command:\n1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!" if action
+            # output_action_header("*** Input Error ***") if action
+            puts "\nSelect an Option:\n1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!" if action
             print "> "
             user_response = gets.chomp
             args = user_response.to_i
@@ -110,13 +110,9 @@ class Store
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
                 CompleteOrder.get_active_user_order
-                # Product.add_product_to_active_customer
-                # output_action_header("\nProduct Added!")
                 between_views
             else
                 CompleteOrder.get_active_user_order
-                # Product.add_product_to_active_customer
-                # output_action_header("\nProduct Added!")
                 between_views
             end
         when 7

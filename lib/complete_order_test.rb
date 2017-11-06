@@ -24,6 +24,4 @@ class CompleteOrderTest < Minitest::Test
         db.close
         assert_equal true, messed.any?
     end
-
-
 end
