@@ -116,6 +116,17 @@ class Store
                 # output_action_header("\nProduct Added!")
                 between_views
             end
+        when 7
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Product.remove_product
+                output_action_header("\nProduct Removed!")
+                between_views
+            else
+                Product.remove_product
+                output_action_header("\nProduct Removed!")
+                between_views
+            end
         when 12
             return :quit
         else
