@@ -30,10 +30,10 @@ class CompleteOrder
 
         # are there any orders? If no, prints message and starts over
         unless order.any?
-        print "Please add some products to your order first. Press any key to return to main menu.\n"
+        print "Please add some products to your order first. Press ENTER key to return to main menu.\n"
         print "> "
-        STDIN.gets
-        ### PLACE ANY KEY STUFF HERE #####
+        STDIN.gets(1)
+        system "clear" or system "cls"
         
         #if there are orders, begins process to close
             else
@@ -43,7 +43,10 @@ class CompleteOrder
             close_order = gets.upcase.chomp
                
             # makes call to DB to get customer payment options
-            if close_order == "Y"
+            unless close_order == "Y"
+                system "clear" or system "cls"
+                print "\nEXITING CLOSE ORDER OPTION\n"
+            else
                 payment_ids = []
                 db = SQLite3::Database.open("bangazon_store.sqlite")
                 customer_payments = db.execute "SELECT * FROM payments WHERE customer_id = #{$ACTIVE_CUSTOMER_ID}"
@@ -73,7 +76,7 @@ class CompleteOrder
 
                 # if the customer already has a payment option, this is the code block that runs and adds selected payment option to the order in the DB
                 else
-                print "\n Choose a payment option:".upcase
+                print "\n Choose a payment option: ".upcase
                 selected_payment_option = gets.chomp.to_i
                     if payment_ids.include?(selected_payment_option)
                     db = SQLite3::Database.open("bangazon_store.sqlite")
@@ -82,6 +85,7 @@ class CompleteOrder
                     WHERE order_id = #{order[0][0]}")
                     db.close
                     system "clear" or system "cls"
+                    print "\n\n#{$ACTIVE_CUSTOMER[:name_first]}'s PAYMENT ADDED TO ORDER ##{order[0][0]}\n"
                     else
                     print "Unrecongnized selection\n".upcase
                     self.get_active_user_order
