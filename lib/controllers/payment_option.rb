@@ -48,14 +48,14 @@ class Payment
     
     def self.add_payment_option
         args = {}
-        print "Enter payment type (e.g. AMEX, VISA, MC, BANK) "
+        print "Enter payment type (AMEX, VISA, MC, BANK) "
         args[:card_name] = gets.upcase.chomp
         unless args[:card_name] == "VISA"
             puts "PAYMENT TYPE INVALID"
             self.add_payment_option
 
         else
-            print "Enter account number"
+            print "Enter account number "
             args[:account] = gets.chomp.upcase.strip
             unless args[:account].length == 16
                 puts "ACCOUNT NUMBER INVALID"
