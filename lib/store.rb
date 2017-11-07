@@ -8,8 +8,9 @@ require 'controllers/customer'
 require 'controllers/order'
 require 'controllers/payment_option'
 require 'controllers/product'
-require 'controllers/active_customer.rb'
-require 'controllers/complete_order.rb'
+require 'controllers/active_customer'
+require 'controllers/complete_order'
+require 'controllers/customer_revenue_report'
 
 class Store
 
@@ -100,13 +101,9 @@ class Store
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
                 Product.list_saved_products
-                # Order.add_product_to_active_order
-                # output_action_header("\nProduct Added to Order!")
                 between_views
             else
                 Product.list_saved_products
-                # Order.add_product_to_active_order
-                # output_action_header("\nProduct Added to Order!")
                 between_views
             end
         when 6
@@ -132,12 +129,10 @@ class Store
         when 10
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
-                CustomerRevenue.remove_product
-               
+                CustomerRevenue.check_active_customer_rev
                 between_views
             else
-                CustomerRevenue.remove_product
-               
+                CustomerRevenue.check_active_customer_rev
                 between_views
             end
         when 12
