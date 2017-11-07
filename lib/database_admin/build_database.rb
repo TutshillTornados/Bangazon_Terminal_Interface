@@ -47,6 +47,7 @@ begin
         order_id INTEGER PRIMARY KEY AUTOINCREMENT,
         total INTEGER,
         payment_id INTEGER,
+        created_date DATE,
         customer_id INTEGER,
         FOREIGN KEY (payment_id) REFERENCES payments(payment_id),
         FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
