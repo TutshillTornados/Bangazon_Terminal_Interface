@@ -122,11 +122,19 @@ class Store
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
                 Product.remove_product
-                output_action_header("\nProduct Removed!")
                 between_views
             else
                 Product.remove_product
-                output_action_header("\nProduct Removed!")
+                between_views
+            end
+            
+        when 8
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Product.update_product
+                between_views
+            else
+                Product.update_product
                 between_views
             end
         when 11
