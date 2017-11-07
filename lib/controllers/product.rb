@@ -71,6 +71,55 @@ class Product
         return true
     end
 
+
+
+    # list_saved_products pulls all products from database and organizes them based on product_id.
+    # Author: Matt Minner and Daniel Greene. 
+    def self.list_saved_products
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        all_products = db.prepare "SELECT * From products"
+        products = all_products.to_a
+
+        puts "\n Which product would you like?\n\n".upcase
+        products.each do |product_id, price, title| 
+            print "#{product_id}" + ". " + "#{title}\n"
+        end
+        print "#{products.length + 1}. Type done to exit\n"
+        save_product_to_order
+        
+    end
+    
+    #PREP GETTING ORDER ID FOR ORDER_PRODUCT TABLE
+    def self.get_order_id
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        order = db.execute "SELECT * FROM orders WHERE payment_id IS NULL AND customer_id = '#{$ACTIVE_CUSTOMER_ID}'"
+        db.close
+        unless order.empty?
+            return order[0][0]
+
+        else
+            db = SQLite3::Database.open("bangazon_store.sqlite")
+            db.execute("INSERT INTO orders(customer_id) VALUES(?)", ["#{$ACTIVE_CUSTOMER_ID}"])
+            self.get_order_id
+        end
+
+    end
+
+    # gets the user input and queries the database based on product_id. Unless it's the last selection which exits to main menu. 
+    def self.save_product_to_order
+        product_to_add = gets.upcase.chomp
+        if product_to_add == "DONE"
+            
+        else
+            product_to_add.to_i
+            get_order_id = self.get_order_id
+            db = SQLite3::Database.open("bangazon_store.sqlite")
+            get_product = db.execute("SELECT * From products where product_id = #{product_to_add}")
+            db.execute("INSERT INTO order_products(price, seller_id, order_id, product_id) VALUES(?,?,?,?)", ["#{get_product[0][1]}", "#{$ACTIVE_CUSTOMER_ID}", "#{get_order_id}", "#{get_product[0][0]}"])
+            self.list_saved_products
+        end
+    end
+
     # import_products Pulls all products that are not on an order from the database.    
     # Author: Austin Kuirts   
     def self.import_products
@@ -79,6 +128,7 @@ class Product
         all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products) AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
         products = all_products
     end
+
     # This method starts the removal of a product
     # Author: Austin Kurtis
     def self.remove_product
@@ -122,6 +172,7 @@ class Product
 
      
     end
+    
     # Update product method call
     # Author Austin Kurtis
     def self.update_product
