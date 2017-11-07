@@ -101,7 +101,15 @@ class Product
         db = SQLite3::Database.open("bangazon_store.sqlite")
         order = db.execute "SELECT * FROM orders WHERE payment_id IS NULL AND customer_id = '#{$ACTIVE_CUSTOMER_ID}'"
         db.close
-        return order[0][0]
+        unless order.empty?
+            return order[0][0]
+
+        else
+            db = SQLite3::Database.open("bangazon_store.sqlite")
+            db.execute("INSERT INTO orders(customer_id) VALUES(?)", ["#{$ACTIVE_CUSTOMER_ID}"])
+            self.get_order_id
+        end
+
     end
 
     # gets the user input and queries the database based on product_id. Unless it's the last selection which exits to main menu. 
