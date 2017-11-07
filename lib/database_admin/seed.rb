@@ -33,7 +33,7 @@ require 'sqlite3'
 
     ######### SEED ORDERS #########
     200.times do
-        db.execute("INSERT INTO orders(total, payment_id, customer_id) VALUES(?, ?, ?)", ["#{Faker::Number.decimal(2)}", "#{Faker::Number.between(1, 80)}", "#{Faker::Number.between(1, 50)}"])
+        db.execute("INSERT INTO orders(total, payment_id, customer_id, created_date) VALUES(?, ?, ?, ?)", ["#{Faker::Number.decimal(2)}", "#{Faker::Number.between(1, 80)}", "#{Faker::Number.between(1, 50)}", "#{Faker::Date.backward(200)}"])
     end
 
     ######### SEED ORDER-PRODUCTS #########
