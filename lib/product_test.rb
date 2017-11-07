@@ -9,6 +9,7 @@ class ProductTest < Minitest::Test
 
     def setup
       @testProduct = Product.new(price:55.0, title:"test_product", description:"descibing bit", quantity:44)
+      @testUser = $ACTIVE_CUSTOMER_ID = 11
     end
 
     #TESTING INITIALIZATION
@@ -26,13 +27,16 @@ class ProductTest < Minitest::Test
         @testProduct.save_product
     end
 
-    def test_data_type_returned
-        if 
+    # def test_data_type_returned
+    #     if 
             
-        else
+    #     else
             
-        end
+    #     end
 
+    # end
+
+    def test_returns_user_products
+        assert_equal 11, @testUser
     end
-
 end
