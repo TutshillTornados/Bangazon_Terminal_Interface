@@ -102,11 +102,9 @@ class Product
         order = db.execute "SELECT * FROM orders WHERE payment_id IS NULL AND customer_id = '#{$ACTIVE_CUSTOMER_ID}'"
         db.close
         unless order.empty?
-            puts "returning order"
             return order[0][0]
 
         else
-            puts "adding new order"
             db = SQLite3::Database.open("bangazon_store.sqlite")
             db.execute("INSERT INTO orders(customer_id) VALUES(?)", ["#{$ACTIVE_CUSTOMER_ID}"])
             self.get_order_id
@@ -116,14 +114,12 @@ class Product
 
     # gets the user input and queries the database based on product_id. Unless it's the last selection which exits to main menu. 
     def self.save_product_to_order
-        puts "enteres save product to order"
         product_to_add = gets.upcase.chomp
         if product_to_add == "DONE"
             
         else
             product_to_add.to_i
             get_order_id = self.get_order_id
-            puts "gets order id #{get_order_id.inspect}"
             db = SQLite3::Database.open("bangazon_store.sqlite")
             get_product = db.execute("SELECT * From products where product_id = #{product_to_add}")
             db.execute("INSERT INTO order_products(price, seller_id, order_id, product_id) VALUES(?,?,?,?)", ["#{get_product[0][1]}", "#{$ACTIVE_CUSTOMER_ID}", "#{get_order_id}", "#{get_product[0][0]}"])
