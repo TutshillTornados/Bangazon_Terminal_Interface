@@ -129,6 +129,8 @@ class Store
                 output_action_header("\nProduct Removed!")
                 between_views
             end
+        when 11
+            Product.product_popularity
         when 12
             return :quit
         else
