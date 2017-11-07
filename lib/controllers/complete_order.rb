@@ -6,12 +6,13 @@
 # Author: Dr. T
 
 require 'payment_option'
+
 class CompleteOrder
 
     # upon selection, function gets active user order 
     def self.get_active_user_order
         system "clear" or system "cls"
-        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+        puts "ACTIVE CUSTOMER ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
 
         print "Would you like to proceed with this active customer? "
         proceed = gets.upcase.chomp
@@ -30,7 +31,7 @@ class CompleteOrder
         # are there any orders? If no, prints message and starts over
         unless order.any?
         print "Please add some products to your order first. Press any key to return to main menu.\n"
-        print ">"
+        print "> "
         STDIN.gets
         ### PLACE ANY KEY STUFF HERE #####
         

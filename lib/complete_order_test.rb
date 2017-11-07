@@ -4,8 +4,9 @@
 
 require 'minitest/autorun'
 require "sqlite3"
-$:.unshift File.join(File.dirname(__FILE__), ".")
-require 'controllers/complete_order.rb'
+# $:.unshift File.join(File.dirname(__FILE__), ".")
+# require 'controllers/complete_order'
+# require 'payment_option'
 
 class CompleteOrderTest < Minitest::Test
     
@@ -22,6 +23,11 @@ class CompleteOrderTest < Minitest::Test
         db = SQLite3::Database.open("bangazon_store.sqlite")
         messed = db.execute "SELECT * FROM orders WHERE customer_id = ? AND payment_id IS NULL", customer
         db.close
-        assert_equal true, messed.any?
+        assert_equal false, messed.any?
+    end
+
+    def test_if_no_payment_options_available
+        payment_ids = []
+        assert_equal true, payment_ids.empty?
     end
 end
