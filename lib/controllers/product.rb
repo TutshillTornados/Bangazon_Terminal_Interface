@@ -121,7 +121,6 @@ class Product
      
     end
 
-
     def self.update_product
         sleep(0.75)
         update_productIds = []
@@ -152,27 +151,56 @@ class Product
                 product_to_update = db_update_request
                 product_to_update.each do |product_id, price, title, description, quantity|
                     
-                    print "\n\n1. Change title #{title}\n"
-                    print "2. Change description #{description}\n"
-                    print "3. Change price #{price}\n"
-                    print "4. Change quantity #{quantity}\n\n"
+                    print "\n\n1. Change title: #{title}\n"
+                    print "2. Change description: #{description}\n"
+                    print "3. Change price: $#{price}\n"
+                    print "4. Change quantity: #{quantity}\n\n"
+                    
                 end
-                
                 print "\n\nSelect an option to update: "
-                update_selection = gets.chomp
+                update_selection = gets.chomp.to_i
                 
-                update_choice = case update_selection
+                case update_selection
                 
                 when 1
-                    update_title
-                when 2
-                    update_description
-                when 3
-                    update_price
-                when 4
-                    update_quantity
-                end
+                    print "\nUpdate Title: "
+                    new_title = gets.chomp
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_title = db.execute ("UPDATE products
+                    SET title = '#{new_title}'
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
 
+                when 2
+                    print "\nUpdate Description: "
+                    new_description = gets.chomp
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_description = db.execute ("UPDATE products
+                    SET description = '#{new_description}'
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
+
+                when 3
+                    print "\nUpdate Price: $"
+                    new_price = gets.chomp.to_f 
+                    price_round = (new_price).round(2)
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_price = db.execute ("UPDATE products
+                    SET price = #{price_round}
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
+                when 4
+                    print "\nUpdate Quantity: "
+                    new_quantity = gets.chomp.to_i
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_Quantity = db.execute ("UPDATE products
+                    SET quantity = #{new_quantity}
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
+                else
+                    print "\nUnrecongnized selection".upcase
+                end
+            
             elsif select_product_to_update.upcase == "EXIT"
     
             else
@@ -180,26 +208,7 @@ class Product
                     self.update_product
             end
         end
-    end
-
-    def update_title
-        print "Update Title"
-        new_title = gets.chomp
-    end
-
-    def update_description
-        print "Update Description"
-        new_description = gets.chomp
-    end
-
-    def update_price
-        print "Update Price"
-        new_price = gets.chomp.to_i
-    end
-
-    def update_quantity
-        print "Update Quantity"
-        new_quantity = gets.chomp
+        
     end
 
     private

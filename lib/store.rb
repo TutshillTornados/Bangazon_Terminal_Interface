@@ -9,6 +9,7 @@ require 'controllers/order'
 require 'controllers/payment_option'
 require 'controllers/product'
 require 'controllers/active_customer.rb'
+require 'controllers/complete_order.rb'
 
 class Store
 
@@ -46,23 +47,15 @@ class Store
             end
             conclusion
         end
-        
-        def get_launch
-            result = nil
-            until result == :quit do
-                action, args = get_action
-                result = do_action(action, args)
-            end
-            conclusion
-        end
+
     # stores user input from main menu options
     def get_action
         action = nil
         # Keep asking for user input until they input a valid action
         until Store::Config.actions.include?(action)
             system "clear" or system "cls" if action
-            output_action_header("*** Input Error ***") if action
-            puts "Select a number to run the command:\n1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!" if action
+            # output_action_header("*** Input Error ***") if action
+            puts "\nSelect an Option:\n1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to sell\n5. Add product to shopping cart\n6. Complete an order\n7. Remove customer product\n8. Update product information\n9. Show stale products\n10. Show customer revenue report\n11. Show overall product popularity\n12. Leave Bangazon!" if action
             print "> "
             user_response = gets.chomp
             args = user_response.to_i
@@ -104,16 +97,25 @@ class Store
                 between_views
             end
         when 5
-            puts "5"
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                Product.list_saved_products
+                # Order.add_product_to_active_order
+                # output_action_header("\nProduct Added to Order!")
+                between_views
+            else
+                Product.list_saved_products
+                # Order.add_product_to_active_order
+                # output_action_header("\nProduct Added to Order!")
+                between_views
+            end
         when 6
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
-                # Product.add_product_to_active_customer
-                # output_action_header("\nProduct Added!")
+                CompleteOrder.get_active_user_order
                 between_views
             else
-                # Product.add_product_to_active_customer
-                # output_action_header("\nProduct Added!")
+                CompleteOrder.get_active_user_order
                 between_views
             end
         when 7
