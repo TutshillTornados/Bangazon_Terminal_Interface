@@ -129,6 +129,17 @@ class Store
                 output_action_header("\nProduct Removed!")
                 between_views
             end
+        when 10
+            if $ACTIVE_CUSTOMER_ID == nil
+                ActiveCustomer.list
+                CustomerRevenue.remove_product
+               
+                between_views
+            else
+                CustomerRevenue.remove_product
+               
+                between_views
+            end
         when 12
             return :quit
         else

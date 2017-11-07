@@ -113,7 +113,7 @@ ruby init.rb
 
 ![alt text](http://www.drteresavasquez.com/wp-content/uploads/2017/11/orderinterface.png "Bangazon! Command Line Ordering System")
 
-[See more details about the interface](https://github.com/TutshillTornados/Bangazon_Terminal_Interface/blob/master/ORDERING_SYSTEM_INTERFACE.md)
+<!-- [See more details about the interface](https://github.com/TutshillTornados/Bangazon_Terminal_Interface/blob/master/ORDERING_SYSTEM_INTERFACE.md) -->
 
 ## Testing
 
