@@ -12,17 +12,15 @@ class CustomerRevenue
         print "Would you like to proceed with this active customer? "
         proceed = gets.upcase.chomp
 
-        if proceed == "Y" 
-            system "clear" or system "cls"
-            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-            self.get_customer_rev_report
-            
-        else
+        unless proceed == "Y" 
             ActiveCustomer.list
             system "clear" or system "cls"
             puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
             self.get_customer_rev_report
-            
+        else
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            self.get_customer_rev_report            
         end
     end
 

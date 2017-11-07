@@ -48,7 +48,7 @@ class Product
     def self.add_product
         args = {}
         print "What is the price of the product? "
-        args[:price] = gets.to_f
+        args[:price] = gets.chomp.upcase.strip.to_i
 
         print "What is the title of the product? "
         args[:title] = gets.chomp.upcase.strip
@@ -71,14 +71,7 @@ class Product
         return true
     end
 
-    # import_products Pulls all products that are not on an order from the database.    
-    # Author: Austin Kurtis    
-    def self.import_products
-        products = []
-        db = SQLite3::Database.open("bangazon_store.sqlite")
-        all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products) AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
-        products = all_products
-    end
+
 
     # list_saved_products pulls all products from database and organizes them based on product_id.
     # Author: Matt Minner and Daniel Greene. 
@@ -127,6 +120,17 @@ class Product
         end
     end
 
+    # import_products Pulls all products that are not on an order from the database.    
+    # Author: Austin Kuirts   
+    def self.import_products
+        products = []
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        all_products = db.prepare "SELECT * FROM products WHERE product_id NOT IN (SELECT product_id FROM order_products) AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
+        products = all_products
+    end
+
+    # This method starts the removal of a product
+    # Author: Austin Kurtis
     def self.remove_product
         sleep(0.75)
         productIds = []
@@ -135,9 +139,10 @@ class Product
         products.each do |product_id, price, title| 
         print "#{product_id}" + ". " + "#{title}\n"
         productIds.push(product_id)
-        print "\n Choose a Product to delete:".upcase
+        print "\n Type EXIT to return to main menu:\n".upcase
+        print "\n Choose a Product to delete: ".upcase
         end
-            
+        # checks to see if the active customer has products if not asks to add products or goes forward
         if productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
             selection = gets.upcase.chomp
@@ -149,12 +154,15 @@ class Product
                 self.remove_product
         end
         else
-            product_to_delete = gets.chomp.to_i
-            if productIds.include?(product_to_delete)
+            # starts the delete product process
+            product_to_delete = gets.chomp
+            if productIds.include?(product_to_delete.to_i)
                 db = SQLite3::Database.open("bangazon_store.sqlite")
                 db.execute "DELETE FROM products WHERE product_id = #{product_to_delete} AND seller_id = #{$ACTIVE_CUSTOMER_ID} "
                 db.close
                 system "clear" or system "cls"
+            elsif product_to_delete.upcase == "EXIT"
+
             else
                 print "Unrecongnized selection\n".upcase
                     self.remove_product
@@ -162,12 +170,133 @@ class Product
 
         end
 
+     
+    end
+    
+    # Update product method call
+    # Author Austin Kurtis
+    def self.update_product
+        sleep(0.75)
+        update_productIds = []
+        update_products = self.import_products
+        print "\n"
+        # pulls in the list of products
+        update_products.each do |product_id, price, title| 
+        print "#{product_id}" + ". " + "#{title}\n"
+        update_productIds.push(product_id)
+        print "\n Type EXIT to return to main menu:\n".upcase
+        print "\n Choose a Product to update: ".upcase
+        end
+        # if the products are empty prompt to add products
+        if update_productIds.empty?
+            print "This customer has no products. Would you like to add a product? Y/N: "
+            selection = gets.upcase.chomp
+           if selection == "Y"
+                self.add_product_to_active_customer
+                elsif selection =="N"
+            else
+                print "Unrecongnized selection".upcase
+                self.update_product
+           end
+        else
+            # Asks input to choose a product then lists the attributes for change
+            select_product_to_update = gets.chomp
+            if update_productIds.include?(select_product_to_update.to_i)
+                product_to_update = []
+                db = SQLite3::Database.open("bangazon_store.sqlite")
+                db_update_request = db.execute "SELECT * FROM products WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
+                product_to_update = db_update_request
+                product_to_update.each do |product_id, price, title, description, quantity|
+                    
+                    print "\n\n1. Change title: #{title}\n"
+                    print "2. Change description: #{description}\n"
+                    print "3. Change price: $#{price}\n"
+                    print "4. Change quantity: #{quantity}\n\n"
+                    
+                end
+                print "\n\nSelect an option to update: "
+                update_selection = gets.chomp.to_i
+                
+                case update_selection
+                # Updates the Title
+                when 1
+                    print "\nUpdate Title: "
+                    new_title = gets.chomp
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_title = db.execute ("UPDATE products
+                    SET title = '#{new_title}'
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
+                # Updates the description
+                when 2
+                    print "\nUpdate Description: "
+                    new_description = gets.chomp
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_description = db.execute ("UPDATE products
+                    SET description = '#{new_description}'
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
+                # Updates the price
+                when 3
+                    print "\nUpdate Price: $"
+                    new_price = gets.chomp.to_f 
+                    price_round = (new_price).round(2)
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_price = db.execute ("UPDATE products
+                    SET price = #{price_round}
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
+                # Updates the quantity
+                when 4
+                    print "\nUpdate Quantity: "
+                    new_quantity = gets.chomp.to_i
+                    db = SQLite3::Database.open("bangazon_store.sqlite")
+                    db_update_Quantity = db.execute ("UPDATE products
+                    SET quantity = #{new_quantity}
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    db.close
+                else
+                    print "\nUnrecongnized selection".upcase
+                end
+            
+            elsif select_product_to_update.upcase == "EXIT"
+    
+            else
+                print "Unrecongnized selection\n".upcase
+                    self.update_product
+            end
+        end
         
     end
 
+# OVERAL PRODUCT POPULARITY 
 
-    def update_product
+def self.product_popularity
+    db = SQLite3::Database.open("bangazon_store.sqlite")
+    popularity = db.execute 'SELECT p.title, count(op.product_id) "Orders", count(DISTINCT o.customer_id) "Purchasers", sum(p.price) "Revenue" FROM products p, order_products op, orders o WHERE op.product_id = p.product_id AND op.order_id = o.order_id GROUP BY p.title ORDER BY "Revenue" DESC LIMIT 3;'
+    line0 = " " << "Product".ljust(20)
+    line0 << " " + "Orders".ljust(11)
+    line0 << " " + "Purchasers".ljust(15)
+    line0 << " " + "Revenue".ljust(15)
+    puts line0
+    puts "*" * 60
+    popularity.each do |title, orders, purchasers, revenue|
+    line =  " " << "#{title}".ljust(20)
+    line << " " + "#{orders}".ljust(11)
+    line << " " + "#{purchasers}".ljust(15)
+    line << " " + "#{revenue.round(2)}".ljust(15)
+    puts line
     end
+    puts "*" * 60
+    line2 =  " " << "TOTALS:".ljust(20)
+    line2 << " " + "#{popularity[2][1] + popularity[1][1] + popularity[0][1]}".ljust(11)
+    line2 << " " + "#{popularity[2][2] + popularity[1][2] + popularity[0][2]}".ljust(15)
+    line2 << " " + "#{popularity[2][3] + popularity[1][3] + popularity[0][3]}".ljust(15)
+    puts line2
+    db.close
+end
+
+
 
     private
     
