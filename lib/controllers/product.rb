@@ -96,6 +96,14 @@ class Product
         
     end
     
+    #PREP GETTING ORDER ID FOR ORDER_PRODUCT TABLE
+    def self.get_order_id
+        db = SQLite3::Database.open("bangazon_store.sqlite")
+        order = db.execute "SELECT * FROM orders WHERE payment_id IS NULL AND customer_id = '#{$ACTIVE_CUSTOMER_ID}'"
+        db.close
+        return order[0][0]
+    end
+
     # gets the user input and queries the database based on product_id. Unless it's the last selection which exits to main menu. 
     def self.save_product_to_order
         product_to_add = gets.upcase.chomp
@@ -103,9 +111,10 @@ class Product
             
         else
             product_to_add.to_i
+            get_order_id = self.get_order_id
             db = SQLite3::Database.open("bangazon_store.sqlite")
-            get_product = db.prepare "SELECT * From products where product_id = #{product_to_add}"
-            print get_product.to_a
+            get_product = db.execute("SELECT * From products where product_id = #{product_to_add}")
+            db.execute("INSERT INTO order_products(price, seller_id, order_id, product_id) VALUES(?,?,?,?)", ["#{get_product[0][1]}", "#{$ACTIVE_CUSTOMER_ID}", "#{get_order_id}", "#{get_product[0][0]}"])
             self.list_saved_products
         end
     end
