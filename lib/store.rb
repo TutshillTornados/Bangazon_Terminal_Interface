@@ -127,6 +127,7 @@ class Store
                 Product.remove_product
                 between_views
             end
+            
         when 8
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
@@ -135,7 +136,9 @@ class Store
             else
                 Product.update_product
                 between_views
-        end
+            end
+        when 11
+            Product.product_popularity
         when 12
             return :quit
         else
