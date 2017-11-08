@@ -135,6 +135,7 @@ class Store
             end
         when 9
             Product.stale_products
+            between_views
         when 10
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
@@ -146,6 +147,7 @@ class Store
             end
         when 11
             Product.product_popularity
+            between_views
         when 12
             return :quit
         else

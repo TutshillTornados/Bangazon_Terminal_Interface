@@ -121,7 +121,7 @@ class Product
     end
 
     # import_products Pulls all products that are not on an order from the database.    
-    # Author: Austin Kuirts   
+    # Author: Austin Kuirts  
     def self.import_products
         products = []
         db = SQLite3::Database.open("bangazon_store.sqlite")

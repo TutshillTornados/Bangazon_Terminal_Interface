@@ -20,7 +20,7 @@ class CustomerRevenue
         else
             system "clear" or system "cls"
             puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-            self.get_customer_rev_report            
+            self.get_customer_rev_report   
         end
     end
 
