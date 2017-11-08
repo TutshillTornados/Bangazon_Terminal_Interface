@@ -144,6 +144,7 @@ class Store
             end
         when 11
             Product.product_popularity
+            between_views
         when 12
             return :quit
         else
