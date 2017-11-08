@@ -39,4 +39,9 @@ class ProductTest < Minitest::Test
     def test_returns_user_products
         assert_equal 11, @testUser
     end
+
+    def test_returns_product_arrays
+        assert_kind_of Array, Product.import_products
+    end
+
 end

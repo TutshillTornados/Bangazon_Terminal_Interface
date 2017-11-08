@@ -172,7 +172,7 @@ class Product
 
      
     end
-    
+
     # Update product method call
     # Author Austin Kurtis
     def self.update_product
@@ -248,7 +248,7 @@ class Product
                     db.close
                 # Updates the quantity
                 when 4
-                    print "\nUpdate Quantity: "
+                    print "\nEnter new Quantity: "
                     new_quantity = gets.chomp.to_i
                     db = SQLite3::Database.open("bangazon_store.sqlite")
                     db_update_Quantity = db.execute ("UPDATE products
@@ -268,35 +268,6 @@ class Product
         end
         
     end
-
-# OVERAL PRODUCT POPULARITY 
-
-def self.product_popularity
-    db = SQLite3::Database.open("bangazon_store.sqlite")
-    popularity = db.execute 'SELECT p.title, count(op.product_id) "Orders", count(DISTINCT o.customer_id) "Purchasers", sum(p.price) "Revenue" FROM products p, order_products op, orders o WHERE op.product_id = p.product_id AND op.order_id = o.order_id GROUP BY p.title ORDER BY "Revenue" DESC LIMIT 3;'
-    line0 = " " << "Product".ljust(20)
-    line0 << " " + "Orders".ljust(11)
-    line0 << " " + "Purchasers".ljust(15)
-    line0 << " " + "Revenue".ljust(15)
-    puts line0
-    puts "*" * 60
-    popularity.each do |title, orders, purchasers, revenue|
-    line =  " " << "#{title}".ljust(20)
-    line << " " + "#{orders}".ljust(11)
-    line << " " + "#{purchasers}".ljust(15)
-    line << " " + "#{revenue.round(2)}".ljust(15)
-    puts line
-    end
-    puts "*" * 60
-    line2 =  " " << "TOTALS:".ljust(20)
-    line2 << " " + "#{popularity[2][1] + popularity[1][1] + popularity[0][1]}".ljust(11)
-    line2 << " " + "#{popularity[2][2] + popularity[1][2] + popularity[0][2]}".ljust(15)
-    line2 << " " + "#{popularity[2][3] + popularity[1][3] + popularity[0][3]}".ljust(15)
-    puts line2
-    db.close
-end
-
-
 
     private
     
