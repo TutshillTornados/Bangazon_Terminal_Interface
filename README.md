@@ -18,7 +18,7 @@ Welcome to The Command Line Ordering System. This project will allow a user to i
 - [Meet the Dev Team](#meet-the-dev-team)
 
 ## Video Walk Through of the App
-[![Bangazon Terminal Interface](http://www.drteresavasquez.com/wp-content/uploads/2017/11/bangazon.png)](https://www.youtube.com/watch?v=Jaita4YJUJo)
+[![Bangazon Terminal Interface](http://www.drteresavasquez.com/wp-content/uploads/2017/11/bangazon-e1510170979908.png)](https://www.youtube.com/watch?v=Jaita4YJUJo)
 
 ## Get Started
 
