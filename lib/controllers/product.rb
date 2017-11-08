@@ -187,8 +187,7 @@ class Product
         print "#{product_id}" + ". " + "#{title}\n"
         productIds.push(product_id)
         end
-        print "\n Type EXIT to return to main menu:\n".upcase
-        print "\n Choose a Product to delete: ".upcase
+        
         # checks to see if the active customer has products if not asks to add products or goes forward
         if productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
@@ -202,6 +201,8 @@ class Product
         end
         else
             # starts the delete product process
+            print "\n Type EXIT to return to main menu:\n".upcase
+            print "\n Choose a Product to delete: ".upcase
             product_to_delete = gets.chomp
             if productIds.include?(product_to_delete.to_i)
                 db = SQLite3::Database.open("bangazon_store.sqlite")
@@ -255,8 +256,7 @@ class Product
         print "#{product_id}" + ". " + "#{title}\n"
         update_productIds.push(product_id)
         end
-        print "\n Type EXIT to return to main menu:\n".upcase
-        print "\n Choose a Product to update: ".upcase
+       
         # if the products are empty prompt to add products
         if update_productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
@@ -270,6 +270,8 @@ class Product
            end
         else
             # Asks input to choose a product then lists the attributes for change
+            print "\n Type EXIT to return to main menu:\n".upcase
+            print "\n Choose a Product to update: ".upcase
             select_product_to_update = gets.chomp
             if update_productIds.include?(select_product_to_update.to_i)
                 product_to_update = []
