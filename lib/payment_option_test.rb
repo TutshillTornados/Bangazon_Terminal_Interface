@@ -14,7 +14,6 @@ require 'controllers/payment_option'
 class PaymentTest < Minitest::Test
     def setup
         @testPayment = Payment.new(card_name:"AMEXs", account:1234123412341234)
-        # Payment.new(name:"VISA")
     end
 
     def test_initialize

@@ -65,8 +65,6 @@ class Product
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
         db.execute("INSERT INTO products(price, title, description, quantity, date_added, seller_id) VALUES(?, ?, ?, ?, ?, ?)", ["#{@price}", "#{@title}", "#{@description}", "#{@quantity}", "#{Date.today}", "#{$ACTIVE_CUSTOMER_ID}"])
-        #Add active customerId as SellerId to table
-        #Add current date to date_added on table
         db.close
         return true
     end
@@ -74,7 +72,32 @@ class Product
 
 
     # list_saved_products pulls all products from database and organizes them based on product_id.
-    # Author: Matt Minner and Daniel Greene. 
+    # Author: Matt Minner and Daniel Greene.
+
+    #CHECK FOR ACTIVE CUSTOMER EACH TIME
+    def self.add_product_to_active_customer_order
+        system "clear" or system "cls"
+        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+
+        print "Would you like to proceed with this active customer? "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y"
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Add Product to a Customer Order **")
+            add_product_to_order = self.list_saved_products
+
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Add Product to a Customer Order **")
+            add_product_to_order = self.list_saved_products     
+        end
+        
+    end
+    
     def self.list_saved_products
         db = SQLite3::Database.open("bangazon_store.sqlite")
         all_products = db.prepare "SELECT * From products"
@@ -88,6 +111,7 @@ class Product
         save_product_to_order
         
     end
+
     
     #PREP GETTING ORDER ID FOR ORDER_PRODUCT TABLE
     def self.get_order_id
@@ -109,7 +133,7 @@ class Product
     def self.save_product_to_order
         product_to_add = gets.upcase.chomp
         if product_to_add == "DONE"
-            
+        
         else
             product_to_add.to_i
             get_order_id = self.get_order_id
@@ -172,7 +196,7 @@ class Product
                 self.add_product_to_active_customer
                 elsif selection =="N"
             else
-                print "Unrecongnized selection".upcase
+                print "Unrecognized selection".upcase
                 self.remove_product
         end
         else
@@ -186,7 +210,7 @@ class Product
             elsif product_to_delete.upcase == "EXIT"
 
             else
-                print "Unrecongnized selection\n".upcase
+                print "Unrecognized selection\n".upcase
                     self.remove_product
             end
 
@@ -328,7 +352,6 @@ def self.stale_products
     list_stale_products.each do |product_id, title, date_added| 
         print "#{product_id}" + ". " + "#{title}" " #{date_added}\n"
     end
-    print "#{list_stale_products.length + 1}. Type done to exit\n"
 end
 
 # OVERAL PRODUCT POPULARITY
