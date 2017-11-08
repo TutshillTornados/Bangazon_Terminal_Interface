@@ -5,6 +5,7 @@ require 'sqlite3'
 
 class CustomerRevenue
 
+    # checks for active customer. If a customer is already active, confirms that user wants to proceed with this customer
     def self.check_active_customer_rev
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
@@ -24,6 +25,7 @@ class CustomerRevenue
         end
     end
 
+    # queries the DB by joining op and p tables by active customer
     def self.get_customer_rev_report
         db = SQLite3::Database.open("bangazon_store.sqlite")
         seller_totals = db.execute("SELECT p.title, op.*
@@ -31,6 +33,8 @@ class CustomerRevenue
         WHERE  op.product_id =  p.product_id
         AND op.seller_id = #{$ACTIVE_CUSTOMER_ID}")
 
+        # the db call returns an array of items containing the customer products sold. 
+        # This logic is separating the order IDs from the other essential info so that all orders sharing the same ID can be combined in the next logic
         seller_order_ids = []
         seller_totals.each do |title, order_products_id, price, seller_id, order_id, product_id| 
             unless seller_order_ids.include?(order_id)
@@ -38,6 +42,7 @@ class CustomerRevenue
             end
         end
 
+         # this logic is sorting and hashing the products sold on each order
         products_array = {}
         seller_totals.each do |title, order_products_id, price, seller_id, order_id, product_id| 
             seller_order_ids.each do |other_order_id|
@@ -49,24 +54,26 @@ class CustomerRevenue
         end
         system "clear" or system "cls"
         print "\nRevenue report for #{$ACTIVE_CUSTOMER[:name_first]}:\n"
+
+        # this logic combines the orders with the same order IDs in a hash, which contains an array of arrays. In order to get into the hash, this logic iterates not only through the hash...
         products_array.each_pair {|key, value| 
         puts "\nOrder ##{key} \n"
         puts "-" * 70
+            # it also iterates through the array of and presents it as required
             value.each do |title, product_id, price|
             line =  " " << "#{title}".ljust(33)
             line << " " + "#{product_id}".ljust(24)
             line << " " + "#{price}".ljust(24)
             puts line
-            
             end
         }
 
+        # Makes call to DB to sum all records that are sold by customer
         db = SQLite3::Database.open("bangazon_store.sqlite")
         seller_revenue = db.execute("SELECT SUM(price)
         FROM order_products
         WHERE seller_id = #{$ACTIVE_CUSTOMER_ID};")
         seller_rev_float = seller_revenue[0][0].to_f.round(2)
-        
         print "\nTotal Revenue: $" + "#{seller_rev_float}" + "\n\n"
 
     end
