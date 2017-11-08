@@ -361,6 +361,7 @@ def self.stale_products
     end
     puts "-> Press any key to return to main menu"
     gets.chomp
+    system "clear" or system "cls"
 end
 
 # OVERAL PRODUCT POPULARITY
@@ -397,6 +398,7 @@ def self.product_popularity
     db.close
     puts "-> Press any key to return to main menu"
     gets.chomp
+    system "clear" or system "cls"
 
 end
 

@@ -78,6 +78,7 @@ class CustomerRevenue
 
         puts "-> Press ENTER key to return to main menu"
         gets.chomp
+        system "clear" or system "cls"
     end
 
     private
