@@ -121,7 +121,7 @@ class Store
                 Product.remove_product
                 between_views
             else
-                Product.remove_product
+                Product.remove_product_customer
                 between_views
             end
         when 8
@@ -130,9 +130,11 @@ class Store
                 Product.update_product
                 between_views
             else
-                Product.update_product
+                Product.update_product_customer
                 between_views
             end
+        when 9
+            Product.stale_products
         when 10
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list

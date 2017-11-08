@@ -21,7 +21,7 @@ class Product
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
 
-        print "Would you like to proceed with this active customer? "
+        print "Would you like to proceed with this active customer? (Y/N) "
         proceed = gets.upcase.chomp
 
         if proceed == "Y" 
@@ -131,6 +131,28 @@ class Product
 
     # This method starts the removal of a product
     # Author: Austin Kurtis
+    def self.remove_product_customer
+        system "clear" or system "cls"
+        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+
+        print "Would you like to proceed with this active customer? Y/N: "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y" 
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            remove_product = self.remove_product
+
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            remove_product = self.remove_product        
+        end
+    end
+
     def self.remove_product
         sleep(0.75)
         productIds = []
@@ -139,9 +161,9 @@ class Product
         products.each do |product_id, price, title| 
         print "#{product_id}" + ". " + "#{title}\n"
         productIds.push(product_id)
+        end
         print "\n Type EXIT to return to main menu:\n".upcase
         print "\n Choose a Product to delete: ".upcase
-        end
         # checks to see if the active customer has products if not asks to add products or goes forward
         if productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
@@ -175,6 +197,27 @@ class Product
     
     # Update product method call
     # Author Austin Kurtis
+    def self.update_product_customer
+        system "clear" or system "cls"
+        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+
+        print "Would you like to proceed with this active customer? Y/N: "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y" 
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            update_product = self.update_product
+
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            update_product = self.update_product        
+        end
+    end
     def self.update_product
         sleep(0.75)
         update_productIds = []
@@ -269,7 +312,27 @@ class Product
         
     end
 
-# OVERAL PRODUCT POPULARITY 
+# SHOW STALE PRODUCTS
+#Author: Matt Minner
+
+def self.stale_products
+    db = SQLite3::Database.open("bangazon_store.sqlite")
+    stale_products = db.execute "SELECT p.product_id, p.title, p.date_added FROM products p  WHERE strftime('%m', 'now') - strftime('%m', p.date_added) >= 6 and product_id NOT IN (SELECT product_id FROM order_products)
+                                 union 
+                                 SELECT p.product_id, p.title, p.date_added FROM products p JOIN order_products op JOIN orders o WHERE p.product_id = op.product_id and op.order_id = o.order_id and o.payment_id NOT IN (SELECT payment_id FROM orders) and strftime('%m', 'now') - strftime('%m', o.created_date) >= 3 
+                                 union 
+                                 SELECT p.product_id, p.title, p.date_added FROM products p JOIN order_products op JOIN orders o WHERE p.product_id = op.product_id and op.order_id = o.order_id and EXISTS (SELECT payment_id FROM orders) and quantity > 0 and  strftime('%m', 'now') - strftime('%m', p.date_added) >= 6;"
+
+    list_stale_products = stale_products.to_a
+    puts "\n Products that follow stale criteria\n\n".upcase
+    list_stale_products.each do |product_id, title, date_added| 
+        print "#{product_id}" + ". " + "#{title}" " #{date_added}\n"
+    end
+    print "#{list_stale_products.length + 1}. Type done to exit\n"
+end
+
+# OVERAL PRODUCT POPULARITY
+#Author: Daniel Greene
 
 def self.product_popularity
     db = SQLite3::Database.open("bangazon_store.sqlite")
