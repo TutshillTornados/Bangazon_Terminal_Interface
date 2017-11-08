@@ -166,14 +166,14 @@ class Product
         if proceed == "Y" 
             system "clear" or system "cls"
             puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-            output_action_header("** Select a Product to Update**")
+            output_action_header("** Select a Product to Remove **")
             remove_product = self.remove_product
 
         else
             ActiveCustomer.list
             system "clear" or system "cls"
             puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-            output_action_header("** Create a Customer Product **")
+            output_action_header("** Select a Product to Remove **")
             remove_product = self.remove_product        
         end
     end
@@ -233,14 +233,14 @@ class Product
         if proceed == "Y" 
             system "clear" or system "cls"
             puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-            output_action_header("** Create a Customer Product **")
+            output_action_header("** Select a Product to Update **")
             update_product = self.update_product
 
         else
             ActiveCustomer.list
             system "clear" or system "cls"
             puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-            output_action_header("** Create a Customer Product **")
+            output_action_header("** Select a Product to Update **")
             update_product = self.update_product        
         end
     end
