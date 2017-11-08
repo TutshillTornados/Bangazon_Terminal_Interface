@@ -269,7 +269,27 @@ class Product
         
     end
 
-# OVERAL PRODUCT POPULARITY 
+# SHOW STALE PRODUCTS
+#Author: Matt Minner
+
+def self.stale_products
+    db = SQLite3::Database.open("bangazon_store.sqlite")
+    stale_products = db.execute "SELECT p.product_id, p.title, p.date_added FROM products p  WHERE strftime('%m', 'now') - strftime('%m', p.date_added) >= 6 and product_id NOT IN (SELECT product_id FROM order_products)
+                                 union 
+                                 SELECT p.product_id, p.title, p.date_added FROM products p JOIN order_products op JOIN orders o WHERE p.product_id = op.product_id and op.order_id = o.order_id and o.payment_id NOT IN (SELECT payment_id FROM orders) and strftime('%m', 'now') - strftime('%m', o.created_date) >= 3 
+                                 union 
+                                 SELECT p.product_id, p.title, p.date_added FROM products p JOIN order_products op JOIN orders o WHERE p.product_id = op.product_id and op.order_id = o.order_id and EXISTS (SELECT payment_id FROM orders) and quantity > 0 and  strftime('%m', 'now') - strftime('%m', p.date_added) >= 6;"
+
+    list_stale_products = stale_products.to_a
+    puts "\n Products that follow stale criteria\n\n".upcase
+    list_stale_products.each do |product_id, title, date_added| 
+        print "#{product_id}" + ". " + "#{title}" " #{date_added}\n"
+    end
+    print "#{list_stale_products.length + 1}. Type done to exit\n"
+end
+
+# OVERAL PRODUCT POPULARITY
+#Author: Daniel Greene
 
 def self.product_popularity
     db = SQLite3::Database.open("bangazon_store.sqlite")
