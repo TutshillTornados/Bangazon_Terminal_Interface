@@ -166,7 +166,7 @@ class Product
         if proceed == "Y" 
             system "clear" or system "cls"
             puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
-            output_action_header("** Create a Customer Product **")
+            output_action_header("** Select a Product to Update**")
             remove_product = self.remove_product
 
         else
@@ -254,9 +254,9 @@ class Product
         update_products.each do |product_id, price, title| 
         print "#{product_id}" + ". " + "#{title}\n"
         update_productIds.push(product_id)
+        end
         print "\n Type EXIT to return to main menu:\n".upcase
         print "\n Choose a Product to update: ".upcase
-        end
         # if the products are empty prompt to add products
         if update_productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
