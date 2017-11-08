@@ -37,8 +37,17 @@ class CompleteOrder
         
         #if there are orders, begins process to close
             else
+            db = SQLite3::Database.open("bangazon_store.sqlite")
+            order_total = db.execute("SELECT SUM(price)
+            FROM order_products
+            WHERE order_id = #{order[0][0]};")
+            order_update_price = db.execute "UPDATE orders
+            SET total = #{order_total[0][0]}
+            WHERE order_id = #{order[0][0]}"
+            db.close
+            order_total_price = order_total[0][0].to_f.round(2)
             print "** Complete #{$ACTIVE_CUSTOMER[:name_first]}'s Order **\n"
-            print "Your order total is $#{order[0][1]}. Ready to purchase? (Y/N)"
+            print "Your order total is $#{order_total_price}. Ready to purchase? (Y/N)"
             print "> "
             close_order = gets.upcase.chomp
                
