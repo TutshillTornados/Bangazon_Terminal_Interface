@@ -50,10 +50,9 @@ class Payment
         args = {}
         print "Enter payment type (AMEX, VISA, MC, BANK) "
         args[:card_name] = gets.upcase.chomp
-        unless args[:card_name] == "AMEX" || "VISA" || "MC" || "BANK"
+        unless args[:card_name] == "AMEX" || args[:card_name] == "VISA" || args[:card_name] == "MC" || args[:card_name] == "BANK"
             puts "PAYMENT TYPE INVALID"
             self.add_payment_option
-
         else
             print "Enter account number "
             args[:account] = gets.chomp.upcase.strip
@@ -70,7 +69,6 @@ class Payment
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
         db.execute("INSERT INTO payments(name, account, customer_id) VALUES(?, ?, ?)", ["#{card_name}", "#{account}", "#{$ACTIVE_CUSTOMER_ID}"])
-        #Add active customerId to table
         db.close
         return true
     end

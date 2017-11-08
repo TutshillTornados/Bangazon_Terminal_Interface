@@ -65,8 +65,6 @@ class Product
         return false unless DatabaseAdmin.file_useable?
         db = SQLite3::Database.open("bangazon_store.sqlite")
         db.execute("INSERT INTO products(price, title, description, quantity, date_added, seller_id) VALUES(?, ?, ?, ?, ?, ?)", ["#{@price}", "#{@title}", "#{@description}", "#{@quantity}", "#{Date.today}", "#{$ACTIVE_CUSTOMER_ID}"])
-        #Add active customerId as SellerId to table
-        #Add current date to date_added on table
         db.close
         return true
     end
@@ -74,7 +72,32 @@ class Product
 
 
     # list_saved_products pulls all products from database and organizes them based on product_id.
-    # Author: Matt Minner and Daniel Greene. 
+    # Author: Matt Minner and Daniel Greene.
+
+    #CHECK FOR ACTIVE CUSTOMER EACH TIME
+    def self.add_product_to_active_customer_order
+        system "clear" or system "cls"
+        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+
+        print "Would you like to proceed with this active customer? "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y"
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Add Product to a Customer Order **")
+            add_product_to_order = self.list_saved_products
+
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Add Product to a Customer Order **")
+            add_product_to_order = self.list_saved_products     
+        end
+        
+    end
+    
     def self.list_saved_products
         db = SQLite3::Database.open("bangazon_store.sqlite")
         all_products = db.prepare "SELECT * From products"
@@ -88,6 +111,7 @@ class Product
         save_product_to_order
         
     end
+
     
     #PREP GETTING ORDER ID FOR ORDER_PRODUCT TABLE
     def self.get_order_id
@@ -109,7 +133,7 @@ class Product
     def self.save_product_to_order
         product_to_add = gets.upcase.chomp
         if product_to_add == "DONE"
-            
+        
         else
             product_to_add.to_i
             get_order_id = self.get_order_id
@@ -121,7 +145,7 @@ class Product
     end
 
     # import_products Pulls all products that are not on an order from the database.    
-    # Author: Austin Kuirts   
+    # Author: Austin Kuirts  
     def self.import_products
         products = []
         db = SQLite3::Database.open("bangazon_store.sqlite")
@@ -131,6 +155,7 @@ class Product
 
     # This method starts the removal of a product
     # Author: Austin Kurtis
+    # This Method first calls the active customer and confirms the use has the one wanted.
     def self.remove_product_customer
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
@@ -152,7 +177,7 @@ class Product
             remove_product = self.remove_product        
         end
     end
-
+    # Starts the remove product process by brining in the list of products for active customer
     def self.remove_product
         sleep(0.75)
         productIds = []
@@ -172,7 +197,7 @@ class Product
                 self.add_product_to_active_customer
                 elsif selection =="N"
             else
-                print "Unrecongnized selection".upcase
+                print "Unrecognized selection".upcase
                 self.remove_product
         end
         else
@@ -186,7 +211,7 @@ class Product
             elsif product_to_delete.upcase == "EXIT"
 
             else
-                print "Unrecongnized selection\n".upcase
+                print "Unrecognized selection\n".upcase
                     self.remove_product
             end
 
@@ -197,6 +222,7 @@ class Product
     
     # Update product method call
     # Author Austin Kurtis
+    # This Method first calls the active customer and confirms the use has the one wanted.
     def self.update_product_customer
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
@@ -218,6 +244,7 @@ class Product
             update_product = self.update_product        
         end
     end
+    # self.update_product pulls in the list of products of the active customer if any exits and returns the products id and product title
     def self.update_product
         sleep(0.75)
         update_productIds = []
@@ -261,42 +288,42 @@ class Product
                 update_selection = gets.chomp.to_i
                 
                 case update_selection
-                # Updates the Title
+                # Gets user input and updates the title within the database upon hitting enter and exits to the main menu.
                 when 1
                     print "\nUpdate Title: "
                     new_title = gets.chomp
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_title = db.execute ("UPDATE products
+                    db_update_title = db.execute "UPDATE products
                     SET title = '#{new_title}'
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
-                # Updates the description
+                # Gets user input and updates the description within the database upon hitting enter and exits to the main menu.
                 when 2
                     print "\nUpdate Description: "
                     new_description = gets.chomp
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_description = db.execute ("UPDATE products
+                    db_update_description = db.execute "UPDATE products
                     SET description = '#{new_description}'
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
-                # Updates the price
+                # Gets user input and updates the price within the database upon hitting enter and exits to the main menu.
                 when 3
                     print "\nUpdate Price: $"
                     new_price = gets.chomp.to_f 
                     price_round = (new_price).round(2)
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_price = db.execute ("UPDATE products
+                    db_update_price = db.execute "UPDATE products
                     SET price = #{price_round}
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
-                # Updates the quantity
+                # Gets user input and updates the quantity within the database upon hitting enter and exits to the main menu.
                 when 4
                     print "\nUpdate Quantity: "
                     new_quantity = gets.chomp.to_i
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_Quantity = db.execute ("UPDATE products
+                    db_update_Quantity = db.execute "UPDATE products
                     SET quantity = #{new_quantity}
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
                 else
                     print "\nUnrecongnized selection".upcase
@@ -328,7 +355,6 @@ def self.stale_products
     list_stale_products.each do |product_id, title, date_added| 
         print "#{product_id}" + ". " + "#{title}" " #{date_added}\n"
     end
-    print "#{list_stale_products.length + 1}. Type done to exit\n"
 end
 
 # OVERAL PRODUCT POPULARITY
