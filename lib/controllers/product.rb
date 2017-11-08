@@ -132,15 +132,15 @@ class Product
     # gets the user input and queries the database based on product_id. Unless it's the last selection which exits to main menu. 
     def self.save_product_to_order
         product_to_add = gets.upcase.chomp
-        if product_to_add == "DONE"
-        
-        else
+        unless product_to_add == "DONE"
             product_to_add.to_i
             get_order_id = self.get_order_id
             db = SQLite3::Database.open("bangazon_store.sqlite")
             get_product = db.execute("SELECT * From products where product_id = #{product_to_add}")
             db.execute("INSERT INTO order_products(price, seller_id, order_id, product_id) VALUES(?,?,?,?)", ["#{get_product[0][1]}", "#{$ACTIVE_CUSTOMER_ID}", "#{get_order_id}", "#{get_product[0][0]}"])
             self.list_saved_products
+        else
+
         end
     end
 
@@ -326,13 +326,13 @@ class Product
                     WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
                 else
-                    print "\nUnrecongnized selection".upcase
+                    print "\nUnrecognized selection".upcase
                 end
             
             elsif select_product_to_update.upcase == "EXIT"
     
             else
-                print "Unrecongnized selection\n".upcase
+                print "Unrecognized selection\n".upcase
                     self.update_product
             end
         end
