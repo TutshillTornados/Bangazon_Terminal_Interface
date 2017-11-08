@@ -367,6 +367,7 @@ def self.product_popularity
     db = SQLite3::Database.open("bangazon_store.sqlite")
     popularity = db.execute 'SELECT p.title, count(op.product_id) "Orders", count(DISTINCT o.customer_id) "Purchasers", sum(p.price) "Revenue" FROM products p, order_products op, orders o WHERE op.product_id = p.product_id AND op.order_id = o.order_id GROUP BY p.title ORDER BY "Revenue" DESC LIMIT 3;'
     system "clear" or system "cls"
+    print "Our Most Popular Items"
     line0 = " " << "\nProduct".ljust(20)
     line0 << " " + "Orders".ljust(11)
     line0 << " " + "Purchasers".ljust(15)
