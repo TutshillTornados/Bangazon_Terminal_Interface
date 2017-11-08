@@ -21,7 +21,7 @@ class Product
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
 
-        print "Would you like to proceed with this active customer? "
+        print "Would you like to proceed with this active customer? (Y/N) "
         proceed = gets.upcase.chomp
 
         if proceed == "Y" 
@@ -131,6 +131,28 @@ class Product
 
     # This method starts the removal of a product
     # Author: Austin Kurtis
+    def self.remove_product_customer
+        system "clear" or system "cls"
+        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+
+        print "Would you like to proceed with this active customer? Y/N: "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y" 
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            remove_product = self.remove_product
+
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            remove_product = self.remove_product        
+        end
+    end
+
     def self.remove_product
         sleep(0.75)
         productIds = []
@@ -139,9 +161,9 @@ class Product
         products.each do |product_id, price, title| 
         print "#{product_id}" + ". " + "#{title}\n"
         productIds.push(product_id)
+        end
         print "\n Type EXIT to return to main menu:\n".upcase
         print "\n Choose a Product to delete: ".upcase
-        end
         # checks to see if the active customer has products if not asks to add products or goes forward
         if productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
@@ -175,6 +197,27 @@ class Product
     
     # Update product method call
     # Author Austin Kurtis
+    def self.update_product_customer
+        system "clear" or system "cls"
+        puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+
+        print "Would you like to proceed with this active customer? Y/N: "
+        proceed = gets.upcase.chomp
+
+        if proceed == "Y" 
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            update_product = self.update_product
+
+        else
+            ActiveCustomer.list
+            system "clear" or system "cls"
+            puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
+            output_action_header("** Create a Customer Product **")
+            update_product = self.update_product        
+        end
+    end
     def self.update_product
         sleep(0.75)
         update_productIds = []
