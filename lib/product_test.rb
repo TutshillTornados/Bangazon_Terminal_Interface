@@ -27,15 +27,6 @@ class ProductTest < Minitest::Test
         @testProduct.save_product
     end
 
-    # def test_data_type_returned
-    #     if 
-            
-    #     else
-            
-    #     end
-
-    # end
-
     def test_returns_user_products
         assert_equal 11, @testUser
     end

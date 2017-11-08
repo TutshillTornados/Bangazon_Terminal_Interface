@@ -5,7 +5,6 @@
 require 'sqlite3'
 require 'dba.rb'
 require 'controllers/customer'
-require 'controllers/order'
 require 'controllers/payment_option'
 require 'controllers/product'
 require 'controllers/active_customer'
@@ -100,10 +99,10 @@ class Store
         when 5
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
-                Product.list_saved_products
+                Product.add_product_to_active_customer_order
                 between_views
             else
-                Product.list_saved_products
+                Product.add_product_to_active_customer_order
                 between_views
             end
         when 6
@@ -135,6 +134,7 @@ class Store
             end
         when 9
             Product.stale_products
+            between_views
         when 10
             if $ACTIVE_CUSTOMER_ID == nil
                 ActiveCustomer.list
@@ -146,6 +146,7 @@ class Store
             end
         when 11
             Product.product_popularity
+            between_views
         when 12
             return :quit
         else
