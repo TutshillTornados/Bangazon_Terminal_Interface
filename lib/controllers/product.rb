@@ -377,10 +377,14 @@ def self.product_popularity
     puts line
     end
     puts "*" * 60
+    first_val = popularity[2][3]
+    second_val = popularity[1][3]
+    third_val = popularity[0][3]
+    total_val = first_val + second_val + third_val
     line2 =  " " << "TOTALS:".ljust(20)
     line2 << " " + "#{popularity[2][1] + popularity[1][1] + popularity[0][1]}".ljust(11)
     line2 << " " + "#{popularity[2][2] + popularity[1][2] + popularity[0][2]}".ljust(15)
-    line2 << " " + "#{popularity[2][3] + popularity[1][3] + popularity[0][3]}".ljust(15)
+    line2 << " " + "#{total_val.round(2)}"
     puts line2
     db.close
 end
