@@ -10,7 +10,7 @@ class CustomerRevenue
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
 
-        print "Would you like to proceed with this active customer? "
+        print "Would you like to proceed with this active customer? Y/N: "
         proceed = gets.upcase.chomp
 
         unless proceed == "Y" 
@@ -76,6 +76,8 @@ class CustomerRevenue
         seller_rev_float = seller_revenue[0][0].to_f.round(2)
         print "\nTotal Revenue: $" + "#{seller_rev_float}" + "\n\n"
 
+        puts "-> Press any key to return to main menu"
+        gets.chomp
     end
 
     private
