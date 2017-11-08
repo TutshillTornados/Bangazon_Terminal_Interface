@@ -351,6 +351,7 @@ def self.stale_products
                                  SELECT p.product_id, p.title, p.date_added FROM products p JOIN order_products op JOIN orders o WHERE p.product_id = op.product_id and op.order_id = o.order_id and EXISTS (SELECT payment_id FROM orders) and quantity > 0 and  strftime('%m', 'now') - strftime('%m', p.date_added) >= 6;"
 
     list_stale_products = stale_products.to_a
+    system "clear" or system "cls"
     puts "\n Products that follow stale criteria\n\n".upcase
     list_stale_products.each do |product_id, title, date_added| 
         print "#{product_id}" + ". " + "#{title}" " #{date_added}\n"
@@ -363,7 +364,8 @@ end
 def self.product_popularity
     db = SQLite3::Database.open("bangazon_store.sqlite")
     popularity = db.execute 'SELECT p.title, count(op.product_id) "Orders", count(DISTINCT o.customer_id) "Purchasers", sum(p.price) "Revenue" FROM products p, order_products op, orders o WHERE op.product_id = p.product_id AND op.order_id = o.order_id GROUP BY p.title ORDER BY "Revenue" DESC LIMIT 3;'
-    line0 = " " << "Product".ljust(20)
+    system "clear" or system "cls"
+    line0 = " " << "\nProduct".ljust(20)
     line0 << " " + "Orders".ljust(11)
     line0 << " " + "Purchasers".ljust(15)
     line0 << " " + "Revenue".ljust(15)
