@@ -10,7 +10,7 @@ class CustomerRevenue
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
 
-        print "Would you like to proceed with this active customer? "
+        print "Would you like to proceed with this active customer? Y/N: "
         proceed = gets.upcase.chomp
 
         unless proceed == "Y" 
