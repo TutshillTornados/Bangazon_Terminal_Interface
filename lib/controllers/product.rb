@@ -131,6 +131,7 @@ class Product
 
     # This method starts the removal of a product
     # Author: Austin Kurtis
+    # This Method first calls the active customer and confirms the use has the one wanted.
     def self.remove_product_customer
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
@@ -152,7 +153,7 @@ class Product
             remove_product = self.remove_product        
         end
     end
-
+    # Starts the remove product process by brining in the list of products for active customer
     def self.remove_product
         sleep(0.75)
         productIds = []
@@ -197,6 +198,7 @@ class Product
     
     # Update product method call
     # Author Austin Kurtis
+    # This Method first calls the active customer and confirms the use has the one wanted.
     def self.update_product_customer
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
@@ -218,6 +220,7 @@ class Product
             update_product = self.update_product        
         end
     end
+    # self.update_product pulls in the list of products of the active customer if any exits and returns the products id and product title
     def self.update_product
         sleep(0.75)
         update_productIds = []
@@ -261,42 +264,42 @@ class Product
                 update_selection = gets.chomp.to_i
                 
                 case update_selection
-                # Updates the Title
+                # Gets user input and updates the title within the database upon hitting enter and exits to the main menu.
                 when 1
                     print "\nUpdate Title: "
                     new_title = gets.chomp
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_title = db.execute ("UPDATE products
+                    db_update_title = db.execute "UPDATE products
                     SET title = '#{new_title}'
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
-                # Updates the description
+                # Gets user input and updates the description within the database upon hitting enter and exits to the main menu.
                 when 2
                     print "\nUpdate Description: "
                     new_description = gets.chomp
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_description = db.execute ("UPDATE products
+                    db_update_description = db.execute "UPDATE products
                     SET description = '#{new_description}'
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
-                # Updates the price
+                # Gets user input and updates the price within the database upon hitting enter and exits to the main menu.
                 when 3
                     print "\nUpdate Price: $"
                     new_price = gets.chomp.to_f 
                     price_round = (new_price).round(2)
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_price = db.execute ("UPDATE products
+                    db_update_price = db.execute "UPDATE products
                     SET price = #{price_round}
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
-                # Updates the quantity
+                # Gets user input and updates the quantity within the database upon hitting enter and exits to the main menu.
                 when 4
                     print "\nUpdate Quantity: "
                     new_quantity = gets.chomp.to_i
                     db = SQLite3::Database.open("bangazon_store.sqlite")
-                    db_update_Quantity = db.execute ("UPDATE products
+                    db_update_Quantity = db.execute "UPDATE products
                     SET quantity = #{new_quantity}
-                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}")
+                    WHERE product_id = #{select_product_to_update} AND seller_id = #{$ACTIVE_CUSTOMER_ID}"
                     db.close
                 else
                     print "\nUnrecongnized selection".upcase
