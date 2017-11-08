@@ -359,8 +359,9 @@ def self.stale_products
     list_stale_products.each do |product_id, title, date_added| 
         print "#{product_id}" + ". " + "#{title}" " #{date_added}\n"
     end
-    puts "-> Press any key to return to main menu"
+    puts "-> Press ENTER key to return to main menu"
     gets.chomp
+    system "clear" or system "cls"
 end
 
 # OVERAL PRODUCT POPULARITY
@@ -395,8 +396,9 @@ def self.product_popularity
     line2 << " " + "#{total_val.round(2)}"
     puts line2 
     db.close
-    puts "-> Press any key to return to main menu"
+    puts "-> Press ENTER key to return to main menu"
     gets.chomp
+    system "clear" or system "cls"
 
 end
 
