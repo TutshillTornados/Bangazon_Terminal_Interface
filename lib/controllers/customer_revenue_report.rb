@@ -76,6 +76,8 @@ class CustomerRevenue
         seller_rev_float = seller_revenue[0][0].to_f.round(2)
         print "\nTotal Revenue: $" + "#{seller_rev_float}" + "\n\n"
 
+        puts "-> Press ENTER key to return to main menu"
+        gets.chomp
     end
 
     private
