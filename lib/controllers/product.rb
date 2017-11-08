@@ -187,8 +187,7 @@ class Product
         print "#{product_id}" + ". " + "#{title}\n"
         productIds.push(product_id)
         end
-        print "\n Type EXIT to return to main menu:\n".upcase
-        print "\n Choose a Product to delete: ".upcase
+        
         # checks to see if the active customer has products if not asks to add products or goes forward
         if productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
@@ -202,6 +201,8 @@ class Product
         end
         else
             # starts the delete product process
+            print "\n Type EXIT to return to main menu:\n".upcase
+            print "\n Choose a Product to delete: ".upcase
             product_to_delete = gets.chomp
             if productIds.include?(product_to_delete.to_i)
                 db = SQLite3::Database.open("bangazon_store.sqlite")
@@ -255,8 +256,7 @@ class Product
         print "#{product_id}" + ". " + "#{title}\n"
         update_productIds.push(product_id)
         end
-        print "\n Type EXIT to return to main menu:\n".upcase
-        print "\n Choose a Product to update: ".upcase
+       
         # if the products are empty prompt to add products
         if update_productIds.empty?
             print "This customer has no products. Would you like to add a product? Y/N: "
@@ -270,6 +270,8 @@ class Product
            end
         else
             # Asks input to choose a product then lists the attributes for change
+            print "\n Type EXIT to return to main menu:\n".upcase
+            print "\n Choose a Product to update: ".upcase
             select_product_to_update = gets.chomp
             if update_productIds.include?(select_product_to_update.to_i)
                 product_to_update = []
@@ -351,6 +353,7 @@ def self.stale_products
                                  SELECT p.product_id, p.title, p.date_added FROM products p JOIN order_products op JOIN orders o WHERE p.product_id = op.product_id and op.order_id = o.order_id and EXISTS (SELECT payment_id FROM orders) and quantity > 0 and  strftime('%m', 'now') - strftime('%m', p.date_added) >= 6;"
 
     list_stale_products = stale_products.to_a
+    system "clear" or system "cls"
     puts "\n Products that follow stale criteria\n\n".upcase
     list_stale_products.each do |product_id, title, date_added| 
         print "#{product_id}" + ". " + "#{title}" " #{date_added}\n"
@@ -363,7 +366,8 @@ end
 def self.product_popularity
     db = SQLite3::Database.open("bangazon_store.sqlite")
     popularity = db.execute 'SELECT p.title, count(op.product_id) "Orders", count(DISTINCT o.customer_id) "Purchasers", sum(p.price) "Revenue" FROM products p, order_products op, orders o WHERE op.product_id = p.product_id AND op.order_id = o.order_id GROUP BY p.title ORDER BY "Revenue" DESC LIMIT 3;'
-    line0 = " " << "Product".ljust(20)
+    system "clear" or system "cls"
+    line0 = " " << "\nProduct".ljust(20)
     line0 << " " + "Orders".ljust(11)
     line0 << " " + "Purchasers".ljust(15)
     line0 << " " + "Revenue".ljust(15)
