@@ -19,7 +19,7 @@ class Payment
         system "clear" or system "cls"
         puts "ACTIVE Customer ID: #{$ACTIVE_CUSTOMER_ID} | Name: #{$ACTIVE_CUSTOMER[:name_first]} #{$ACTIVE_CUSTOMER[:name_last]}\n\n"
 
-        print "Would you like to proceed with this active customer? "
+        print "Would you like to proceed with this active customer?(Y/N) "
         proceed = gets.upcase.chomp
 
         if proceed == "Y" 
@@ -50,7 +50,7 @@ class Payment
         args = {}
         print "Enter payment type (AMEX, VISA, MC, BANK) "
         args[:card_name] = gets.upcase.chomp
-        unless args[:card_name] == "VISA"
+        unless args[:card_name] == "AMEX" || "VISA" || "MC" || "BANK"
             puts "PAYMENT TYPE INVALID"
             self.add_payment_option
 
