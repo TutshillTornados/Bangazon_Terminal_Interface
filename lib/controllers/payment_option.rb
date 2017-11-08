@@ -50,10 +50,9 @@ class Payment
         args = {}
         print "Enter payment type (AMEX, VISA, MC, BANK) "
         args[:card_name] = gets.upcase.chomp
-        unless args[:card_name] == "AMEX" || "VISA" || "MC" || "BANK"
+        unless args[:card_name] == "AMEX" || args[:card_name] == "VISA" || args[:card_name] == "MC" || args[:card_name] == "BANK"
             puts "PAYMENT TYPE INVALID"
             self.add_payment_option
-
         else
             print "Enter account number "
             args[:account] = gets.chomp.upcase.strip
